@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import escapeRegExp from 'excape-string-regexp'
+import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class ListContacts extends Component {
@@ -18,30 +18,34 @@ class ListContacts extends Component {
   }
 
   render() {
+    //Object destructuring
+    //destructuring our objects shouldn't change the return value of our code,
+    //but it can make things look a bit cleaner.
+    const { contacts, onDeleteContact } = this.props
+    const { query } = this.state
     let showingContacts
-    if (this.state.query){
-      const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingContacts = this.props.contacts.filter((contact) => match.test(contact.name))
+    if (query){
+      const match = new RegExp(escapeRegExp(query), 'i')
+      showingContacts = contacts.filter((contact) => match.test(contact.name))
     } else {
-      showingContacts = this.props.contacts
+      showingContacts = contacts
     }
 
     showingContacts.sort(sortBy('name'))
 
     return (
       <div className='list-contacts'>
-        {JSON.stringify(this.state)}
         <div className='list-contacts-top'>
           <input
             className='search-contacts'
             type='text'
             placeholder='Search Contacts'
-            value={this.state.query}
+            value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
             />
         </div>
         <ol className='contact-list'>
-          {showingContacts.contacts.map((contact) => (
+          {showingContacts.map((contact) => (
             <li key={contact.id} className='contact-list-item'>
               <div className='contact-avatar' style={{
                 backgroundImage: `url(${contact.avatarURL})`
@@ -51,7 +55,7 @@ class ListContacts extends Component {
                 <p>{contact.name}</p>
                 <p>{contact.email}</p>
               </div>
-              <button onClick={() => this.props.onDeleteContact(contact)} className='contact-remove'>
+              <button onClick={() => onDeleteContact(contact)} className='contact-remove'>
                 Remove
               </button>
             </li>
