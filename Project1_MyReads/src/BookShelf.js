@@ -34,7 +34,7 @@ class BookShelf extends React.Component {
       <h2 className="bookshelf-title">{this.titles[this.props.shelf]}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {books.map((book) => (<Book key={book.id} data={book}/>))}
+          {books.map((book) => (<Book key={book.id} data={book} shelf={this.state.shelf}/>))}
         </ol>
       </div>
     </div>)
