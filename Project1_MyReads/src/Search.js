@@ -1,33 +1,39 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 
 class Search extends React.Component {
-  state = {
-    books: []
+  static propTypes = {
+    onBookChange: PropTypes.func.isRequired,
+    shownBooks: PropTypes.array.isRequired
   }
-  
+
+  state = {
+    searchedBooks: []
+  }
+
   fetchBooks = (query) => {
     if (!query.trim())
       return;
-    BooksAPI.search(query.trim(), 20).then((books) => {
-      if (books.error)
+    BooksAPI.search(query.trim(), 20).then((searchedBooks) => {
+      if (searchedBooks.error)
         return;
-      books.forEach((book) => {
+      searchedBooks.forEach((searchedBook) => {
         this.props.shownBooks.forEach((shownBook) => {
-          if (shownBook.id === book.id) {
-            book.shelf = shownBook.shelf;
+          if (shownBook.id === searchedBook.id) {
+            searchedBook.shelf = shownBook.shelf;
           } else {
-            book.shelf = "none";
+            searchedBook.shelf = "none";
           }
         })
       })
-      this.setState({books: books});
+      this.setState({searchedBooks: searchedBooks});
     })
   }
   render() {
-    const books = this.state.books;
+    const books = this.state.searchedBooks;
 
     return (
       <div className="search-books">

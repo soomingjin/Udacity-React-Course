@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 class Book extends React.Component {
-  state = {}
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+    key: PropTypes.string,
+    onBookChange: PropTypes.func.isRequired
+  }
 
   handleChange = (e) => {
     e.preventDefault();

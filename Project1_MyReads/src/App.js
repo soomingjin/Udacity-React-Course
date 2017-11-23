@@ -28,7 +28,8 @@ import Search from './Search'
   to ensure the correct books are displayed on '/search' page.
 
   This project's learning objectives includes but not limited to, Lifting States,
-  Hooking on React Lifecycle events, Managing states, passing props, error handling
+  Hooking on React Lifecycle events, Managing states, passing props, error handling,
+  edge cases
 */
 class BooksApp extends React.Component {
   state = {
@@ -55,7 +56,7 @@ class BooksApp extends React.Component {
     const books = this.state.books;
     return (
       <div className="app">
-        <Route exact="exact" path="/" render={() => (<div className="list-books">
+        <Route exact path="/" render={() => (<div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
@@ -69,8 +70,11 @@ class BooksApp extends React.Component {
             <div className="open-search">
               <Link to="/search">Add a book</Link>
             </div>
-          </div>)}/>
-        <Route path="/search" render={() => (<Search shownBooks={books} onBookChange={this.handleBookChange}/>)}/>
+          </div>
+        )}/>
+        <Route path="/search" render={() => (
+          <Search shownBooks={books} onBookChange={this.handleBookChange}/>
+        )}/>
       </div>
     )
   }
