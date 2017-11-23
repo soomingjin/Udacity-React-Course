@@ -1,12 +1,7 @@
 import React from 'react';
-import * as BooksAPI from './BooksAPI'
 
 class Book extends React.Component {
-  state = {
-  }
-  componentDidMount() {
-
-  }
+  state = {}
 
   handleChange = (e) => {
     e.preventDefault();
@@ -19,22 +14,27 @@ class Book extends React.Component {
       <li>
         <div className="book">
           <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${data.imageLinks.thumbnail})` }}></div>
-          <div className="book-shelf-changer">
-          {/**
-            Manipulate the value attribute on the root element to choose the selected element
-            These are Controlled Components.
-            In HTML, form elements such as <input>, <textarea>, and <select> typically maintain their own state and update it based on user input.
-            You can pass an array into the value attribute, allowing you to select multiple options in a select tag:
-            */}
-          <select value={data.shelf} onChange={this.handleChange}>
-            <option value="none" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none" disabled>None</option>
-          </select>
-          </div>
+            <div className="book-cover" style={{
+                width: 128,
+                height: 193,
+                backgroundImage: `url(${data.imageLinks.thumbnail})`
+              }}></div>
+            <div className="book-shelf-changer">
+              {/**
+              Manipulate the value attribute on the root element to choose the selected element
+              These are Controlled Components.
+              In HTML, form elements such as <input>, <textarea>, and <select> typically maintain their own state and update it based on user input.
+              You can pass an array into the value attribute, allowing you to select multiple options in a select tag:
+              */
+              }
+              <select value={data.shelf} onChange={this.handleChange}>
+                <option value="none" disabled="disabled">Move to...</option>
+                <option value="currentlyReading">Currently Reading</option>
+                <option value="wantToRead">Want to Read</option>
+                <option value="read">Read</option>
+                <option value="none">None</option>
+              </select>
+            </div>
           </div>
           <div className="book-title">{data.title}</div>
           <div className="book-authors">{data.author}</div>

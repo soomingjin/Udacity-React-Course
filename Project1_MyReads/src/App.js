@@ -1,32 +1,50 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-// import { Route } from 'react-router-dom'
+import {Route} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import BookShelf from './BookShelf'
+import Search from './Search'
+/**
+  Submission for Udacity React Course Project_1 23 Nov 2017
+  Done by: Soo Ming Jin
+  This React app has three levels of Components
+  App
+  |__Search
+    |__Book
+  |__BookShelf
+    |__Book
+  The books are stored in App's state and are accessed from every other component
+  One event will trigger the change to the books array, namely onChange on select
+  element in the Book component that will trigger a function in App to handle the event
+  Another event is onChange event on input element in Search component, it will trigger a
+  function in its own component.
 
+  The handleBookChange on App component updates the book when the value in the
+  dropdown menu changes. It will update it's shelf value on the server and
+  re-render the page.
+
+  The fetchBooks function on Search component will update the books array in Search component
+  to ensure the correct books are displayed on '/search' page.
+
+  This project's learning objectives includes but not limited to, Lifting States,
+  Hooking on React Lifecycle events, Managing states, passing props, error handling
+*/
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
     books: []
   }
 
-  componentWillMount(){
+  componentWillMount() {
     BooksAPI.getAll().then(books => {
       this.setState({books: books})
     })
   }
 
+  // Lifted state two levels up
   handleBookChange = (book, shelf) => {
-    console.log(book);
-    console.log(shelf);
     BooksAPI.update(book, shelf).then(() => {
-      BooksAPI.getAll().then(books =>{
+      BooksAPI.getAll().then(books => {
         this.setState({books: books})
       })
     })
@@ -34,46 +52,25 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const books = this.state.books;
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
-
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
-        ) : (
-          <div className="list-books">
+        <Route exact="exact" path="/" render={() => (<div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf onBookChange={this.handleBookChange} books={this.state.books} shelf="currentlyReading"/>
-                <BookShelf onBookChange={this.handleBookChange} books={this.state.books} shelf="wantToRead"/>
-                <BookShelf onBookChange={this.handleBookChange} books={this.state.books} shelf="read"/>
+                <BookShelf onBookChange={this.handleBookChange} books={books} shelf="currentlyReading"/>
+                <BookShelf onBookChange={this.handleBookChange} books={books} shelf="wantToRead"/>
+                <BookShelf onBookChange={this.handleBookChange} books={books} shelf="read"/>
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to="/search">Add a book</Link>
             </div>
-          </div>
-        )}
+          </div>)}/>
+        <Route path="/search" render={() => (<Search shownBooks={books} onBookChange={this.handleBookChange}/>)}/>
       </div>
     )
   }
