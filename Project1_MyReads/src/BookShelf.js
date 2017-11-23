@@ -11,30 +11,23 @@ class BookShelf extends React.Component {
 
   state = {
     // types of shelves: currentlyReading, wantToRead, read
-    shelf: this.props.shelf,
-    books: []
+    shelf: "",
   }
 
   componentWillMount() {
-    BooksAPI.getAll().then((books) => {
-      const tempBooks = [];
-      books.forEach((book) => {
-        if (this.state.shelf === book.shelf) {
-          tempBooks.push(book);
-        }
-      })
-      this.setState(prevState => ({books: [...prevState.books, ...tempBooks]}))
-    })
+    const shelf = this.props.shelf;
+    this.setState({shelf: shelf});
   }
-
   render() {
-    let books = this.state.books;
+    const { shelf, books } = this.props;
     // console.log(books);
     return (<div className="bookshelf">
-      <h2 className="bookshelf-title">{this.titles[this.props.shelf]}</h2>
+      <h2 className="bookshelf-title">{this.titles[shelf]}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {books.map((book) => (<Book key={book.id} data={book} shelf={this.state.shelf}/>))}
+          {books.map((book) => {
+            if (this.state.shelf === book.shelf) return <Book key={book.id} data={book} shelf={this.state.shelf} onBookChange={this.props.onBookChange}/>
+          })}
         </ol>
       </div>
     </div>)

@@ -1,11 +1,16 @@
 import React from 'react';
+import * as BooksAPI from './BooksAPI'
 
 class Book extends React.Component {
   state = {
-    data: this.props.data
   }
   componentDidMount() {
 
+  }
+
+  handleChange = (e) => {
+    e.preventDefault();
+    this.props.onBookChange(this.props.data, e.target.value);
   }
 
   render() {
@@ -22,12 +27,12 @@ class Book extends React.Component {
             In HTML, form elements such as <input>, <textarea>, and <select> typically maintain their own state and update it based on user input.
             You can pass an array into the value attribute, allowing you to select multiple options in a select tag:
             */}
-          <select value={this.state.data.shelf}>
+          <select value={data.shelf} onChange={this.handleChange}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
-            <option value="none">None</option>
+            <option value="none" disabled>None</option>
           </select>
           </div>
           </div>
