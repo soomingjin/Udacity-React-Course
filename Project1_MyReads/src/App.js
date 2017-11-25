@@ -45,8 +45,9 @@ class BooksApp extends React.Component {
   // Lifted state two levels up
   handleBookChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
-      BooksAPI.getAll().then(books => {
-        this.setState({books: books})
+      book.shelf = shelf;
+      this.setState(state => {
+        books: state.books.filter(b => b.id !== book.id).concat([ book ])
       })
     })
 
