@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-export default Book = ({data, onBookChange}) => (
+const Book = ({data, onBookChange}) => (
   <li>
     <div className="book">
       <div className="book-top">
@@ -38,3 +38,5 @@ Book.propTypes = {
   key: PropTypes.string,
   onBookChange: PropTypes.func.isRequired
 }
+
+export default Book
