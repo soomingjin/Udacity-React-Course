@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import BookShelf from './BookShelf'
 import Search from './Search'
 /**
-  Submission for Udacity React Course Project_1 23 Nov 2017
+  Re-Submission for Udacity React Course Project_1 01 Dec 2017
   Done by: Soo Ming Jin
   This React app has three levels of Components
   App
@@ -46,11 +46,10 @@ class BooksApp extends React.Component {
   handleBookChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       book.shelf = shelf;
-      this.setState(state => {
+      this.setState(state => ({
         books: state.books.filter(b => b.id !== book.id).concat([ book ])
-      })
+      }))
     })
-
   }
 
   render() {
