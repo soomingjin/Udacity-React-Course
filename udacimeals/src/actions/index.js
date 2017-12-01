@@ -3,7 +3,7 @@ export const REMOVE_FROM_CALENDAR = "REMOVE_FROM_CALENDAR"
 
 export function addRecipe ({ day, meal, recipe }) {
   return {
-    type: ADD_CONTACT,
+    type: ADD_RECIPE,
     day,
     meal,
     recipe
