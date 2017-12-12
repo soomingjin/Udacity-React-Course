@@ -14,7 +14,7 @@ class App extends Component {
 }
 
 // map redux state to the compoonent's props
-function mapStateToProps (calendar) {
+function mapStateToProps ({ calendar, food }) {
   const dayOrder = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
   return {
@@ -22,7 +22,7 @@ function mapStateToProps (calendar) {
       day,
       meal: Object.keys(calendar[day]).reduce((meals, meal) => {
         meals[meal] = calendar[day][meal]
-        ? calendar[day][meal]
+        ? food[calendar[day][meal]]
         : null
 
         return meals;
