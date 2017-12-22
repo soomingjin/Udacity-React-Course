@@ -20,6 +20,7 @@ class App extends Component {
     day: null,
     food: null,
   }
+
   openFoodModal = ({ meal, day }) => {
     this.setState(() => ({
       foodModalOpen: true,
@@ -67,8 +68,8 @@ class App extends Component {
   }
 
   render() {
-    const { foodModalOpen, loadingFood, ingredientsModalOpen, food } = this.state;
-    const { calendar, remove, selectRecipe } = this.props;
+    const { foodModalOpen, loadingFood, food, ingredientsModalOpen } = this.state
+    const { calendar, selectRecipe, remove } = this.props
     const mealOrder = ['breakfast', 'lunch', 'dinner']
 
 
@@ -106,7 +107,7 @@ class App extends Component {
                           <img src={meals[meal].image} alt={meals[meal].label}/>
                           <button onClick={() => remove({meal, day})}>Clear</button>
                         </div>
-                      : <button onclick={() => this.openFoodModal({ meal, day })}className='icon-btn'>
+                      : <button onClick={() => this.openFoodModal({meal, day})} className='icon-btn'>
                           <CalendarIcon size={30}/>
                         </button>}
                   </li>
@@ -115,6 +116,7 @@ class App extends Component {
             ))}
           </div>
         </div>
+
         <Modal
           className='modal'
           overlayClassName='overlay'
@@ -153,6 +155,7 @@ class App extends Component {
                 </div>}
           </div>
         </Modal>
+
         <Modal
           className='modal'
           overlayClassName='overlay'
@@ -162,6 +165,7 @@ class App extends Component {
         >
           {ingredientsModalOpen && <ShoppingList list={this.generateShoppingList()}/>}
         </Modal>
+
       </div>
     )
   }
@@ -175,14 +179,14 @@ function mapStateToProps ({ calendar, food }) {
   return {
     calendar: dayOrder.map((day) => ({
       day,
-      meal: Object.keys(calendar[day]).reduce((meals, meal) => {
+      meals: Object.keys(calendar[day]).reduce((meals, meal) => {
         meals[meal] = calendar[day][meal]
-        ? food[calendar[day][meal]]
-        : null
+          ? food[calendar[day][meal]]
+          : null
 
-        return meals;
-      },{})
-    }))
+        return meals
+      }, {})
+    })),
   }
 }
 
