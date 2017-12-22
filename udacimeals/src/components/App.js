@@ -8,12 +8,14 @@ import ArrowRightIcon from 'react-icons/lib/fa/arrow-circle-right'
 import Loading from 'react-loading'
 import { fetchRecipes } from '../utils/api'
 import FoodList from './FoodList'
+import ShoppingList from './ShoppingList'
 
 class App extends Component {
 
   state = {
     foodModalOpen: false,
     loadingFood: false,
+    ingredientsModalOpen: false,
     meal: null,
     day: null,
     food: null,
@@ -48,15 +50,39 @@ class App extends Component {
         loadingFood: false,
       })))
   }
+  openIngredientsModal = () => this.setState(() => ({ ingredientsModalOpen: true }))
+  closeIngredientsModal = () => this.setState(() => ({ ingredientsModalOpen: false }))
+  //flattening the ingredients
+  generateShoppingList = () => {
+    return this.props.calendar.reduce((result, { meals }) => {
+      const { breakfast, lunch, dinner } = meals
+
+      breakfast && result.push(breakfast)
+      lunch && result.push(lunch)
+      dinner && result.push(dinner)
+
+      return result
+    }, [])
+    .reduce((ings, { ingredientLines }) => ings.concat(ingredientLines), [])
+  }
 
   render() {
-    const { foodModalOpen, loadingFood, food } = this.state;
+    const { foodModalOpen, loadingFood, ingredientsModalOpen, food } = this.state;
     const { calendar, remove, selectRecipe } = this.props;
     const mealOrder = ['breakfast', 'lunch', 'dinner']
 
 
     return (
       <div className='container'>
+
+        <div className='nav'>
+          <h1 className='header'>UdaciMeals</h1>
+          <button
+            className='shopping-list'
+            onClick={this.openIngredientsModal}>
+              Shopping List
+          </button>
+        </div>
 
         <ul className='meal-types'>
           {mealOrder.map((mealType) => (
@@ -127,11 +153,20 @@ class App extends Component {
                 </div>}
           </div>
         </Modal>
-        
+        <Modal
+          className='modal'
+          overlayClassName='overlay'
+          isOpen={ingredientsModalOpen}
+          onRequestClose={this.closeIngredientsModal}
+          contentLabel='Modal'
+        >
+          {ingredientsModalOpen && <ShoppingList list={this.generateShoppingList()}/>}
+        </Modal>
       </div>
     )
   }
 }
+// only run generateShoppingList when the ingredientsModalOpen is true.. as the function is expensive
 
 // map redux state to the compoonent's props
 function mapStateToProps ({ calendar, food }) {
