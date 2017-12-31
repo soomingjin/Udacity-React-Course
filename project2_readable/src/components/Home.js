@@ -3,18 +3,17 @@ import Category from './Category';
 import Post from './Post';
 
 class Home extends Component {
-  const categories;
-
+  state = {
+    categories: ["react", "redux"],
+  }
   componentWillMount() {
-    categories = ["react", "redux"];
+
   }
 
   render(){
     return (
       <div>
-        {categories.map((category) => (
-          <Category category={category}/>
-        ))}
+        Home
       </div>
     )
   }

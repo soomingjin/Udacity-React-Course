@@ -19,11 +19,16 @@ const logger = store => next => action => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;
 
+// const store = createStore(
+//   reducer,
+//   composeEnhancers(
+//     applyMiddleware(logger)
+//   )
+// );
+
 const store = createStore(
   reducer,
-  composeEnhancers(
-    applyMiddleware(logger)
-  )
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(

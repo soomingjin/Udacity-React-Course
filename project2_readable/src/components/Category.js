@@ -8,12 +8,17 @@ import Post from './Post';
 import FullPost from './Post';
 
 class Category extends Component {
-  const props = this.props;
-
+  state = {
+    category: "",
+  }
+  componentWillMount () {
+    
+  }
   render(){
+    const props = this.props;
     return (
       <div>
-        <div>{props.match.params.category}</div>
+        <div>{this.state.category}</div>
         <Switch>
           <Route path="/:post_id" render={() => (<Post/>)}/>
           <Route path="/" render={(<FullPost/>)}/>
