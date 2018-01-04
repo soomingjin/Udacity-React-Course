@@ -45,7 +45,7 @@ class App extends Component {
 
 
 componentDidMount () {
-  console.log(this.props.children);
+
 }
 // path params :variable
 
@@ -72,7 +72,7 @@ componentDidMount () {
 const mapStateToProps  = (state, ownProps) => {
   // console.log(Object.keys(state["category"]));
   return {
-    categories: Object.keys(state["category"]),
+    categories: state["categories"].map((category) => (category.name))
     // categories: Object.keys(state).filter((key) => key === "category").map((key) => {
     //   return Object.keys(state[key])
     // })
