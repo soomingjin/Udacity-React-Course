@@ -3,9 +3,15 @@ import { connect } from 'react-redux';
 import PartialPost from './PartialPost';
 
 class FullPost extends Component {
+  state = {
+    value: 'voteScore'
+  }
 
-  onSortChange = (sortMethod) => {
-    // console.log(document.getElementById('sort').value);
+  onSortChange = (e) => {
+    const sortMethod = e.target.value;
+    this.setState(() => ({
+      value: sortMethod,
+    }))
   }
 
   componentWillMount() {
@@ -15,17 +21,16 @@ class FullPost extends Component {
     // }
   }
   render(){
-    console.log(this.props.posts);
     return (
       <div>
         <div className='control-panel'>
-          <select value='voteScore' id='sort' className='sort' onChange={(e) => this.onSortChange(e.target.value)}>
+          Sort by: <select value={this.state.value} id='sort' className='sort' onChange={this.onSortChange}>
             <option value="voteScore">Vote Score</option>
             <option value="timestamp">Timestamp</option>
           </select>
           <button>Add New Post</button>
         </div>
-        {this.props.posts.map((post) => (<PartialPost key={post.id}/>))}
+        {this.props.posts.map((post) => (<PartialPost key={post.id} data={post}/>))}
       </div>
     )
   }
@@ -44,9 +49,6 @@ const mapStateToProps  = (state, ownProps) => {
       posts:  Object.keys(state['posts']).map((postId) => {
         return state['posts'][postId]
       })
-      // categories: Object.keys(state).filter((key) => key === "category").map((key) => {
-      //   return Object.keys(state[key])
-      // })
     }
   }
 }

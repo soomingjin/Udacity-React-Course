@@ -3,11 +3,13 @@ import '../styles/App.css'
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Switch
 } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Home from './Home'
 import Category from './Category'
+import Post from './Post'
 
 class App extends Component {
 
@@ -60,9 +62,11 @@ componentDidMount () {
               return (<li key={category} ><Link to={`/${category}`}>{category}</Link></li>)
             })}
           </ul>
-          <Route exact path="/" component={Home}/>
-          <Route path="/:category" component={Category}/>
-
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/:category" component={Category}/>
+            <Route exact path="/:category/:post_id" component={Post}/>
+          </Switch>
         </div>
       </Router>
     )
@@ -70,12 +74,8 @@ componentDidMount () {
 }
 
 const mapStateToProps  = (state, ownProps) => {
-  // console.log(Object.keys(state["category"]));
   return {
     categories: state["categories"].map((category) => (category.name))
-    // categories: Object.keys(state).filter((key) => key === "category").map((key) => {
-    //   return Object.keys(state[key])
-    // })
   }
 }
 export default connect(mapStateToProps)(App);
