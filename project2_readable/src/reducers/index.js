@@ -89,9 +89,33 @@ const postReducer = (posts=initialReadableState, action) => {
       return posts
   }
 }
+const commentReducer = (posts=initialReadableState, action) => {
+  const {id, timestamp, title, body, author, category} = action;
+  switch(action.type){
+    case ADD_COMMENT:
+      return {
+        ...posts,
+        [id]: {
+          ...posts[id],
+          id,
+          timestamp,
+          title,
+          body,
+          author,
+          category,
+        }
+      }
+    case EDIT_COMMENT:
+      return posts
+    case REMOVE_COMMENT:
+      return posts
+    default:
+      return posts
+  }
+}
 
 export default postReducer
 
 // export default combineReducers({
-//   postReducer
+//   postReducer,
 // })

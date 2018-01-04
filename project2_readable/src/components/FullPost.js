@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import Post from ''
+import PartialPost from './PartialPost'
 
 class FullPost extends Component {
 
   render(){
     return (
       <div>
-        <div>{this.props.match.params.post_id}</div>
-        {/*posts.map(post=>{
-          return (
-            <Post />
-          )
-        })*/}
+        <PartialPost />
+        <PartialPost />
+        <PartialPost />
       </div>
     )
   }

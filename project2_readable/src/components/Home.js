@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import Category from './Category';
-import Post from './Post';
+import FullPost from './FullPost';
 
 class Home extends Component {
-  state = {
-    categories: ["react", "redux"],
-  }
   componentWillMount() {
 
   }
 
   render(){
+    const { categories } = this.props;
     return (
       <div>
-        Home
+        <h2>Home</h2>
+        <FullPost/>
+        {/*categories.map((category) => {
+          return (<Category key={category} category={category}/>)
+        })*/}
       </div>
     )
   }
 }
 
-export default Home;
+const mapStateToProps  = (state, ownProps) => {
+  // console.log(Object.keys(state["category"]));
+  return {
+    categories: Object.keys(state["category"]),
+    // categories: Object.keys(state).filter((key) => key === "category").map((key) => {
+    //   return Object.keys(state[key])
+    // })
+  }
+}
+export default connect(mapStateToProps)(Home);

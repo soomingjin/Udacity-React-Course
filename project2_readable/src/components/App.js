@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import '../styles/App.css'
 import {
+  BrowserRouter as Router,
   Route,
-  Link,
-  Switch
+  Link
 } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Home from './Home'
 import Category from './Category'
-import Post from './Post'
-import Edit from './Edit'
 
 class App extends Component {
 
@@ -46,27 +44,27 @@ class App extends Component {
   }
 
 
-
+componentDidMount () {
+  console.log(this.props.children);
+}
 // path params :variable
 
   render() {
     const { categories } = this.props;
     return (
-      <div className='container'>
-        <ul>
-          {categories.map((category) => {
-
-            return (<li><Link to={`/${category}`}>{category}</Link></li>)
-
-          })}
-          <li><Link to='/react'>React</Link></li>
-          <li><Link to='/redux'>Redux</Link></li>
-        </ul>
-        <Switch>
+      <Router>
+        <div className='container'>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            {categories.map((category) => {
+              return (<li key={category} ><Link to={`/${category}`}>{category}</Link></li>)
+            })}
+          </ul>
           <Route exact path="/" component={Home}/>
-          <Route path="/:category" render={() => (<Category />)}/>
-        </Switch>
-      </div>
+          <Route path="/:category" component={Category}/>
+
+        </div>
+      </Router>
     )
   }
 }
@@ -79,7 +77,5 @@ const mapStateToProps  = (state, ownProps) => {
     //   return Object.keys(state[key])
     // })
   }
-  return {}
 }
-
 export default connect(mapStateToProps)(App);
