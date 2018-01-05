@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PartialPost from './PartialPost';
+import { fetchPosts } from '../actions';
 
 class FullPost extends Component {
   state = {
@@ -14,11 +15,12 @@ class FullPost extends Component {
     }))
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // If there is enough time, implement a default sort method that can be configured
     // if(this.props.sortMethod) {
     //   document.getElementById('sort').selectedIndex = this.props.sortMethod;
     // }
+    this.props.fetchPosts()
   }
   render(){
     return (
@@ -53,4 +55,4 @@ const mapStateToProps  = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(FullPost);
+export default connect(mapStateToProps, { fetchPosts })(FullPost);

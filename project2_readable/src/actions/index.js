@@ -1,9 +1,18 @@
+import * as api from '../utils/api'
 export const ADD_POST = "ADD_POST"
+export const GET_ALL_POSTS = 'GET_ALL_POSTS'
 export const EDIT_POST = "EDIT_POST"
 export const REMOVE_POST = "REMOVE_POST"
 export const ADD_COMMENT = "ADD_COMMENT"
 export const EDIT_COMMENT = "EDIT_COMMENT"
 export const REMOVE_COMMENT = "REMOVE_COMMENT"
+
+export const getAllPosts = (posts)  => {
+  return {
+    type: GET_ALL_POSTS,
+    posts
+  }
+}
 
 export function addPost ({id, timestamp, title, body, author, category}) {
   return {
@@ -64,3 +73,9 @@ export function removeComment ({id}) {
     id
   }
 }
+
+export const fetchPosts = () => dispatch => (
+    api
+    .getPosts()
+    .then(posts => dispatch(getAllPosts(posts)))
+)
