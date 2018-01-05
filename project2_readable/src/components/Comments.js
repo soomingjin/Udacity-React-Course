@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import Comments from './Comments'
 
-class Post extends Component {
+class Comments extends Component {
   render(){
     const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
-    const postId = this.props.match ? this.props.match.params.post_id : "";
     return (
       <div className='container'>
-        <div><Link to={`${category}/${id}`}>{title}</Link> by {author}</div>
         <div>{body}</div>
         <div><button>Vote Up</button>Current Score: {voteScore}<button>Vote Down</button></div>
         <div>Comment Count: {commentCount}</div>
@@ -22,7 +18,7 @@ class Post extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    data: state['posts'][ownProps.match.params.post_id]
+    data: state['comments']
   }
 }
-export default connect(mapStateToProps)(Post);
+export default connect(mapStateToProps)(Comments);

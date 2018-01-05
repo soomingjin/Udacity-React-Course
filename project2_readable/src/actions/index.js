@@ -1,6 +1,8 @@
 import * as api from '../utils/api'
-export const ADD_POST = "ADD_POST"
 export const GET_ALL_POSTS = 'GET_ALL_POSTS'
+export const GET_CATEGORIES = 'GET_CATEGORIES'
+export const GET_COMMENTS_FOR_POST = 'GET_COMMENTS_FOR_POST'
+export const ADD_POST = "ADD_POST"
 export const EDIT_POST = "EDIT_POST"
 export const REMOVE_POST = "REMOVE_POST"
 export const ADD_COMMENT = "ADD_COMMENT"
@@ -14,60 +16,59 @@ export const getAllPosts = (posts)  => {
   }
 }
 
-export function addPost ({id, timestamp, title, body, author, category}) {
+//get comments only when needed
+export const getCommentsForPost = (comments)  => {
   return {
-    type: ADD_POST,
-    id,
-    timestamp,
-    title,
-    body,
-    author,
-    category,
+    type: GET_COMMENTS_FOR_POST,
+    comments
   }
 }
 
-export function editPost ({id, timestamp, title, body, author, category}) {
+export const getCategories = (categories) => {
+  return {
+    type: GET_CATEGORIES,
+    categories,
+  }
+}
+
+export function addPost (post) {
+  return {
+    type: ADD_POST,
+    post,
+  }
+}
+
+export function editPost (id, post) {
   return {
     type: EDIT_POST,
     id,
-    timestamp,
-    title,
-    body,
-    author,
-    category,
+    post,
   }
 }
 
-export function removePost ({id}) {
+export function removePost (id) {
   return {
     type: REMOVE_POST,
     id,
   }
 }
 
-export function addComment ({parentId, id, timestamp, body, author}) {
+export function addComment (comment) {
   return {
     type: ADD_COMMENT,
-    parentId,
-    id,
-    timestamp,
-    body,
-    author,
+    comment,
   }
 }
 
-export function editComment ({parentId, id, timestamp, body, author}) {
+export function editComment (id, comment) {
   return {
     type: EDIT_COMMENT,
-    parentId,
     id,
-    timestamp,
-    body,
-    author,
+    comment,
   }
 }
 
-export function removeComment ({id}) {
+export function removeComment (id) {
   return {
     type: REMOVE_COMMENT,
     id
@@ -78,4 +79,14 @@ export const fetchPosts = () => dispatch => (
     api
     .getPosts()
     .then(posts => dispatch(getAllPosts(posts)))
+)
+
+export const fetchCommentsForPost = () => dispatch => (
+    api
+    .getPosts()
+    .then(posts => dispatch(getAllPosts(posts)))
+)
+
+export const fetchCategories = () => dispatch => (
+  api.getCategories().then(categories => dispatch(getCategories))
 )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as api from '../utils/api'
 import '../styles/App.css'
 import {
   BrowserRouter as Router,
@@ -10,6 +11,7 @@ import { connect } from 'react-redux'
 import Home from './Home'
 import Category from './Category'
 import Post from './Post'
+import { getCategories } from '../actions'
 
 class App extends Component {
 
@@ -46,8 +48,12 @@ class App extends Component {
   }
 
 
-componentDidMount () {
-
+componentWillMount () {
+  api
+  .getCategories()
+  .then(data =>
+    this.props.dispatch(getCategories(data.categories)
+  ))
 }
 // path params :variable
 
@@ -78,9 +84,9 @@ componentDidMount () {
   }
 }
 
-const mapStateToProps  = (state, ownProps) => {
+const mapStateToProps  = ({ categories }, ownProps) => {
   return {
-    categories: state["categories"].map((category) => (category.name))
+    categories: Object.keys(categories).map(category => category.name),
   }
 }
 export default connect(mapStateToProps)(App);

@@ -21,6 +21,16 @@ class FullPost extends Component {
     //   document.getElementById('sort').selectedIndex = this.props.sortMethod;
     // }
     this.props.fetchPosts()
+
+    // const rabak = {
+    //   id: "lol",
+    //   timestamp: 123,
+    //   title: "haha",
+    //   body: 'lolsalina body',
+    //   author: 'me',
+    //   category: 'react'
+    // }
+
   }
   render(){
     return (

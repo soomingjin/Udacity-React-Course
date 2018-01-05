@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 
 import {
   GET_ALL_POSTS,
+  GET_CATEGORIES,
   ADD_POST,
   EDIT_POST,
   REMOVE_POST,
@@ -12,7 +13,11 @@ import {
 
 //fetch the categories first
 
-
+const defaultState = {
+  'categories': [],
+  'comments': {},
+  'posts': {}
+}
 const initialReadableState = {
   'categories': [
       {
@@ -53,49 +58,67 @@ const initialReadableState = {
   'posts': {}
 }
 //API call => response => dispatch action w/ received data => action is called => reducer is called => store is updated => mapStateToProps updates view
-const postReducer = (state=initialReadableState, action) => {
-  const {id, timestamp, title, body, author, category, posts} = action;
+const posts = (state={}, action) => {
+  const {id, posts, post} = action;
   switch(action.type){
     case GET_ALL_POSTS:
       return {
         ...state,
-        posts: posts,
-      }
-    case EDIT_POST:
-      return state
-    case REMOVE_POST:
-      return state
-    default:
-      return state
-  }
-}
-const commentReducer = (posts=initialReadableState, action) => {
-  const {id, timestamp, title, body, author, category} = action;
-  switch(action.type){
-    case ADD_COMMENT:
-      return {
         ...posts,
+      }
+    case ADD_POST:
+      return {
+        ...state,
         [id]: {
-          ...posts[id],
-          id,
-          timestamp,
-          title,
-          body,
-          author,
-          category,
+          ...post
         }
       }
-    case EDIT_COMMENT:
-      return posts
-    case REMOVE_COMMENT:
-      return posts
+    case EDIT_POST:
+      return {
+        ...state,
+        [id]: {
+          ...post[id],
+          ...post
+        }
+      }
+    case REMOVE_POST:
+      return {
+        ...state.posts.filter((currentPost) => currentPost.id !== post.id)
+      }
     default:
-      return posts
+      return state
+  }
+}
+const comments = (state={}, action) => {
+  const {id, comments, comment } = action;
+  switch(action.type){
+    case ADD_COMMENT:
+      return state
+    case EDIT_COMMENT:
+      return state
+    case REMOVE_COMMENT:
+      return state
+    default:
+      return state
   }
 }
 
-export default postReducer
+const categories = (state = {}, action) => {
+  const { categories } = action;
+  switch(action.type){
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        ...categories,
+      }
+    default:
+      return state
+  }
+}
+// export default postReducer
 
-// export default combineReducers({
-//   postReducer,
-// })
+export default combineReducers({
+  categories,
+  posts,
+  comments,
+})
