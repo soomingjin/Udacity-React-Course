@@ -24,7 +24,7 @@ class Home extends Component {
 
 const mapStateToProps  = ({ categories }, ownProps) => {
   return {
-    categories: Object.keys(categories).map(category => category.name),
+    categories: Object.keys(categories).map(category => categories[category].name),
   }
 }
 export default connect(mapStateToProps)(Home);
