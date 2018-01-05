@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Link,
-//   Switch
-// } from 'react-router-dom';
 import Post from './Post';
 import FullPost from './FullPost';
 

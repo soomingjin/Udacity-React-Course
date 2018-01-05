@@ -60,10 +60,6 @@ componentWillMount () {
   render() {
     const { categories } = this.props;
     const url = "http://localhost:3001/posts"
-  //   const value = () => fetch(url, { headers: { 'Authorization': 'whatever-you-want' }})
-  //     .then((res) => {
-  //       return res.json()
-  // })
     return (
       <Router>
         <div className='container'>

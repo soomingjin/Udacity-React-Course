@@ -11,52 +11,51 @@ import {
   REMOVE_COMMENT,
 } from '../actions'
 
-//fetch the categories first
-
 const defaultState = {
   'categories': [],
   'comments': {},
   'posts': {}
 }
-const initialReadableState = {
-  'categories': [
-      {
-        name: 'react',
-        path: 'react'
-      },
-      {
-        name: 'redux',
-        path: 'redux'
-      },
-      {
-        name: 'udacity',
-        path: 'udacity'
-      }
-  ],
-  'comments': {
-    "894tuq4ut84ut8v4t8wun89g": {
-      id: '894tuq4ut84ut8v4t8wun89g',
-      parentId: "8xf0y6ziyjabvozdd253nd",
-      timestamp: 1468166872634,
-      body: 'Hi there! I am a COMMENT.',
-      author: 'thingtwo',
-      voteScore: 6,
-      deleted: false,
-      parentDeleted: false
-    },
-    "8tu4bsun805n8un48ve89": {
-      id: '8tu4bsun805n8un48ve89',
-      parentId: "8xf0y6ziyjabvozdd253nd",
-      timestamp: 1469479767190,
-      body: 'Comments. Are. Cool.',
-      author: 'thingone',
-      voteScore: -5,
-      deleted: false,
-      parentDeleted: false
-    },
-  },
-  'posts': {}
-}
+// const initialReadableState = {
+//   'categories': [
+//       {
+//         name: 'react',
+//         path: 'react'
+//       },
+//       {
+//         name: 'redux',
+//         path: 'redux'
+//       },
+//       {
+//         name: 'udacity',
+//         path: 'udacity'
+//       }
+//   ],
+//   'comments': {
+//     "894tuq4ut84ut8v4t8wun89g": {
+//       id: '894tuq4ut84ut8v4t8wun89g',
+//       parentId: "8xf0y6ziyjabvozdd253nd",
+//       timestamp: 1468166872634,
+//       body: 'Hi there! I am a COMMENT.',
+//       author: 'thingtwo',
+//       voteScore: 6,
+//       deleted: false,
+//       parentDeleted: false
+//     },
+//     "8tu4bsun805n8un48ve89": {
+//       id: '8tu4bsun805n8un48ve89',
+//       parentId: "8xf0y6ziyjabvozdd253nd",
+//       timestamp: 1469479767190,
+//       body: 'Comments. Are. Cool.',
+//       author: 'thingone',
+//       voteScore: -5,
+//       deleted: false,
+//       parentDeleted: false
+//     },
+//   },
+//   'posts': {}
+// }
+
 //API call => response => dispatch action w/ received data => action is called => reducer is called => store is updated => mapStateToProps updates view
 const posts = (state={}, action) => {
   const {id, posts, post} = action;

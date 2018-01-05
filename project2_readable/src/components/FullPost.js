@@ -22,15 +22,6 @@ class FullPost extends Component {
     // }
     this.props.fetchPosts()
 
-    // const rabak = {
-    //   id: "lol",
-    //   timestamp: 123,
-    //   title: "haha",
-    //   body: 'lolsalina body',
-    //   author: 'me',
-    //   category: 'react'
-    // }
-
   }
   render(){
     return (
