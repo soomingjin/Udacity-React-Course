@@ -81,10 +81,10 @@ export const fetchPosts = () => dispatch => (
     .then(posts => dispatch(getAllPosts(posts)))
 )
 
-export const fetchCommentsForPost = () => dispatch => (
+export const fetchCommentsForPost = (id) => dispatch => (
     api
     .getPosts()
-    .then(posts => dispatch(getAllPosts(posts)))
+    .then(comments => dispatch(getAllPosts(comments)))
 )
 
 export const fetchCategories = () => dispatch => (

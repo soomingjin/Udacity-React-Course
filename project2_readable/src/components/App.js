@@ -18,11 +18,9 @@ class App extends Component {
   state = {
     postModalOpen: false,
     commentModalOpen: false,
-
   }
 
   openPostModal = ({ edit }) => {
-
     this.setState(() => ({
       postModalOpen: true,
     }))
