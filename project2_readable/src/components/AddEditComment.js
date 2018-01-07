@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
 class AddEditComment extends Component {
-  const props = this.props;
 
   render(){
     return (
       <div>
-        <div>{}</div>
+        <form method='post'>
+          <input placeholder='body' type='text'/>
+          <input placeholder='author' type='text'/>
+          <input type='submit'/>
+        </form>
       </div>
     )
   }

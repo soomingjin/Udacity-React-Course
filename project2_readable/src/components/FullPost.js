@@ -20,18 +20,17 @@ class FullPost extends Component {
     // if(this.props.sortMethod) {
     //   document.getElementById('sort').selectedIndex = this.props.sortMethod;
     // }
-    this.props.fetchPosts()
+    // this.props.fetchPosts()
 
   }
   render(){
     return (
       <div>
         <div className='control-panel'>
-          Sort by: <select value={this.state.value} id='sort' className='sort' onChange={this.onSortChange}>
+          <label>Sort by: </label><select value={this.state.value} id='sort' className='sort' onChange={this.onSortChange}>
             <option value="voteScore">Vote Score</option>
             <option value="timestamp">Timestamp</option>
           </select>
-          <button>Add New Post</button>
         </div>
         {this.props.posts.map((post) => (<PartialPost key={post.id} data={post}/>))}
       </div>
@@ -40,6 +39,7 @@ class FullPost extends Component {
 }
 
 const mapStateToProps  = (state, ownProps) => {
+  console.log(Object.values(state.posts));
   const category = ownProps.category;
   let posts = Object.keys(state['posts']);
   if(category) {
@@ -49,7 +49,7 @@ const mapStateToProps  = (state, ownProps) => {
     }
   } else {
     return {
-      posts:  Object.keys(state['posts']).map((postId) => {
+      posts:  Object.keys(state.posts).map((postId) => {
         return state['posts'][postId]
       })
     }

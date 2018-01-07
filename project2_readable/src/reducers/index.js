@@ -6,9 +6,11 @@ import {
   GET_COMMENTS_FOR_POST,
   ADD_POST,
   EDIT_POST,
+  VOTE_POST,
   REMOVE_POST,
   ADD_COMMENT,
   EDIT_COMMENT,
+  VOTE_COMMENT,
   REMOVE_COMMENT,
 } from '../actions'
 
@@ -48,6 +50,14 @@ const posts = (state={}, action) => {
       return {
         ...state,
         ...posts,
+        // ...posts.map((post) => {
+        //
+        //   return {
+        //     [post.id]: {
+        //       ...post
+        //     }
+        //   }
+        // })
       }
     case ADD_POST:
       return {
@@ -68,6 +78,13 @@ const posts = (state={}, action) => {
       return {
         ...state.posts.filter((currentPost) => currentPost.id !== post.id)
       }
+    case VOTE_POST:
+      return {
+        ...state,
+        [id] : {
+          ...post
+        }
+      }
     default:
       return state
   }
@@ -77,7 +94,6 @@ const comments = (state={}, action) => {
   switch(action.type){
     case GET_COMMENTS_FOR_POST:
       return {
-        ...state,
         ...comments
       }
     case ADD_COMMENT:
@@ -98,6 +114,14 @@ const comments = (state={}, action) => {
     case REMOVE_COMMENT:
       return {
         ...state.comments.filter((currentComment) => currentComment.id !== comment.id)
+      }
+    case VOTE_COMMENT:
+      return {
+        ...state,
+        [id] : {
+          ...state[id],
+          // [id]['voteScore']:  vote === "voteUp" ? [id]['voteScore'] + 1 : [id]['voteScore'] - 1
+        }
       }
     default:
       return state

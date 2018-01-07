@@ -18,8 +18,8 @@ export const getCategories = () =>
   axios.get(`${URL}/categories`, {headers})
   .then(res => res.data)
 
-export const getCommentsFromPost = (id) =>
-    axios.get(`${URL}/comments/${id}`, {headers})
+export const getCommentsForPost = (id) =>
+    axios.get(`${URL}/posts/${id}/comments/`, {headers})
     .then(res => res.data)
 
 //axios.post(url[, data[, config]])
@@ -49,11 +49,11 @@ export const editPost = (id, data) =>
 
 //vote = "upVote" || "downVote"
 export const votePost = (id, vote) =>
-  axios.post(`${URL}/posts/${id}`, vote, { headers })
+  axios.post(`${URL}/posts/${id}`, {option: vote}, { headers })
   .then(res => res.data)
 
 export const voteComment = (id, vote) =>
-  axios.post(`${URL}/comments/${id}`, vote, { headers })
+  axios.post(`${URL}/comments/${id}`, {option: vote}, { headers })
   .then(res => res.data)
 
 export const removePost = (id) =>

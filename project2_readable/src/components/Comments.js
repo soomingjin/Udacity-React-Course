@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
+import * as api from '../utils/api'
 import { connect } from 'react-redux'
+import Comment from './Comment'
+import { getCommentsForPost } from '../actions'
 
 class Comments extends Component {
+
+  componentWillMount() {
+    api.getCommentsForPost(this.props.parentId).then((data) => {
+      this.props.getCommentsForPost(data)
+    })
+  }
   render(){
-    const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
     return (
       <div className='container'>
-        <div>{body}</div>
-        <div><button>Vote Up</button>Current Score: {voteScore}<button>Vote Down</button></div>
-        <div>Comment Count: {commentCount}</div>
-        <div><button>Edit Post</button><button>Delete Post</button></div>
-        <div>Time posted: {timestamp}</div>
+        <h2>Comments</h2>
+        {this.props.data.map((data) => (<Comment key={data.id} data={data} />))}
       </div>
     )
   }
@@ -18,7 +23,7 @@ class Comments extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    data: state['comments']
+    data: Object.values(state.comments)
   }
 }
-export default connect(mapStateToProps)(Comments);
+export default connect(mapStateToProps, { getCommentsForPost })(Comments);
