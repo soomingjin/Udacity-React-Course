@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import * as api from '../utils/api'
+import { connect } from 'react-redux'
+import { addPost, editPost } from '../actions'
 
 class AddEditPost extends Component {
   state = {
@@ -10,6 +13,9 @@ class AddEditPost extends Component {
 
   handleCategoryChange = (e) => {
     this.setState({category: e.currentTarget.value})
+  }
+  handleSubmit = (e) => {
+
   }
   render(){
     return (
@@ -31,4 +37,4 @@ class AddEditPost extends Component {
   }
 }
 
-export default AddEditPost;
+export default connect(null, { addPost, editPost })(AddEditPost);

@@ -49,7 +49,10 @@ const posts = (state={}, action) => {
     case GET_ALL_POSTS:
       return {
         ...state,
-        ...posts,
+        ...posts.reduce((previous, current) => {
+          previous[current.id] = current
+          return previous
+        }, {})
         // ...posts.map((post) => {
         //
         //   return {
@@ -94,7 +97,10 @@ const comments = (state={}, action) => {
   switch(action.type){
     case GET_COMMENTS_FOR_POST:
       return {
-        ...comments
+        ...comments.reduce((previous, current) => {
+          previous[current.id] = current
+          return previous
+        }, {})
       }
     case ADD_COMMENT:
       return {

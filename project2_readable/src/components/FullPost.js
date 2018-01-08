@@ -39,7 +39,6 @@ class FullPost extends Component {
 }
 
 const mapStateToProps  = (state, ownProps) => {
-  console.log(Object.values(state.posts));
   const category = ownProps.category;
   let posts = Object.keys(state['posts']);
   if(category) {

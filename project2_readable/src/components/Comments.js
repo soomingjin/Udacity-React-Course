@@ -15,7 +15,7 @@ class Comments extends Component {
     return (
       <div className='container'>
         <h2>Comments</h2>
-        {this.props.data.map((data) => (<Comment key={data.id} data={data} />))}
+        {this.props.data.map((data) => (<Comment key={data.id} id={data.id} />))}
       </div>
     )
   }

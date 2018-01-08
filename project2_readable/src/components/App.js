@@ -14,7 +14,7 @@ import Category from './Category'
 import Post from './Post'
 import AddEditPost from './AddEditPost'
 import AddEditComment from './AddEditComment'
-import { getCategories, fetchPosts } from '../actions'
+import { getCategories, getAllPosts, fetchPosts } from '../actions'
 
 class App extends Component {
 
@@ -42,7 +42,8 @@ componentWillMount () {
   .then(data =>
     this.props.getCategories(data.categories)
   )
-  this.props.fetchPosts()
+  api.getPosts().then(data => this.props.getAllPosts(data))
+
 }
 
   render() {
@@ -87,4 +88,4 @@ const mapStateToProps  = ({ categories }, ownProps) => {
 }
 
 
-export default connect(mapStateToProps, { getCategories, fetchPosts })(App);
+export default connect(mapStateToProps, { getCategories, getAllPosts })(App);
