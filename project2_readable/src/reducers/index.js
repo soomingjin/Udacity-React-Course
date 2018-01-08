@@ -65,7 +65,7 @@ const posts = (state={}, action) => {
     case ADD_POST:
       return {
         ...state,
-        [id]: {
+        [post.id]: {
           ...post
         }
       }
@@ -79,7 +79,11 @@ const posts = (state={}, action) => {
       }
     case REMOVE_POST:
       return {
-        ...state.posts.filter((currentPost) => currentPost.id !== post.id)
+        ...state,
+        [id]: {
+          ...state[id],
+          deleted: true
+        }
       }
     case VOTE_POST:
       return {
@@ -105,7 +109,7 @@ const comments = (state={}, action) => {
     case ADD_COMMENT:
       return {
         ...state,
-        [id] : {
+        [comment.id] : {
           ...comment
         }
       }
@@ -119,7 +123,11 @@ const comments = (state={}, action) => {
       }
     case REMOVE_COMMENT:
       return {
-        ...state.comments.filter((currentComment) => currentComment.id !== comment.id)
+        ...state,
+        [id]: {
+          ...state[id],
+          deleted: true
+        }
       }
     case VOTE_COMMENT:
       return {

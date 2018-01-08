@@ -57,9 +57,9 @@ export const voteComment = (id, vote) =>
   .then(res => res.data)
 
 export const removePost = (id) =>
-    axios.delete(`${URL}/posts/${id}`, { headers })
-    .then(res => res.data)
+  axios.delete(`${URL}/posts/${id}`, { headers })
+  .then(res => res.data)
 
 export const removeComment = (id) =>
-  axios.delete(`${URL}/posts/${id}`, { headers })
+  axios.delete(`${URL}/comments/${id}`, { headers })
   .then(res => res.data)

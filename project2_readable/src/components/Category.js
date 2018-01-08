@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import Post from './Post';
 import FullPost from './FullPost';
 
@@ -14,6 +15,7 @@ class Category extends Component {
     return (
       <div className='container'>
         {category !== "" ? (<h2>{category}</h2>) : ""}
+        <Link to="/" replace={false}>Back</Link>
         <FullPost category={category}/>
       </div>
     )
