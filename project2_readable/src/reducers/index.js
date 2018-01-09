@@ -133,7 +133,7 @@ const comments = (state={}, action) => {
       return {
         ...state,
         [id] : {
-          ...state[id],
+          ...comment
           // [id]['voteScore']:  vote === "voteUp" ? [id]['voteScore'] + 1 : [id]['voteScore'] - 1
         }
       }

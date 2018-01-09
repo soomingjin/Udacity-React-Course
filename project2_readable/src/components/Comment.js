@@ -6,18 +6,17 @@ import { voteComment, removeComment } from '../actions'
 class Comment extends Component {
 
   handleUpVote = (id, e) => {
-    console.log(id);
-    api.voteComment(id, "upVote").then((data) => this.props.voteComment(id, data))
+    api.voteComment(id, "upVote").then((data) => this.props.voteComment(data.id, data))
   }
 
   handleDownVote = (id, e) => {
-    api.voteComment(id, "downVote").then((data) => this.props.voteComment(id, data))
+    api.voteComment(id, "downVote").then((data) => this.props.voteComment(data.id, data))
   }
 
   handleDeleteComment = (id, e) => {
     api.removeComment(id).then((data) => this.props.removeComment(data.id))
   }
-  
+
   render(){
     const { id, timestamp, body, author, voteScore, deleted } = this.props.data
     return (
@@ -45,4 +44,9 @@ const mapStateToProps = (state, ownProps) => {
     data: state.comments[ownProps.id]
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  voteComment: data => dispatch(voteComment(data.id, data)),
+  removeComment: data => dispatch(removeComment(data.id))
+})
 export default connect(mapStateToProps, { voteComment, removeComment })(Comment);

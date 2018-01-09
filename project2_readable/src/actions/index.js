@@ -85,11 +85,11 @@ export function removeComment (id) {
   }
 }
 
-export function voteComment (id, post) {
+export function voteComment (id, comment) {
   return {
     type: VOTE_COMMENT,
     id,
-    post,
+    comment,
   }
 }
 
