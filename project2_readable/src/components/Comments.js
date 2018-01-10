@@ -26,4 +26,8 @@ const mapStateToProps = (state, ownProps) => {
     data: Object.values(state.comments)
   }
 }
-export default connect(mapStateToProps, { getCommentsForPost })(Comments);
+
+const mapDispatchToProps = dispatch => ({
+  getCommentsForPost: data => dispatch(getCommentsForPost(data))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

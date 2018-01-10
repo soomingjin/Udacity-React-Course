@@ -46,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  voteComment: data => dispatch(voteComment(data.id, data)),
-  removeComment: data => dispatch(removeComment(data.id))
+  voteComment: (id, data) => dispatch(voteComment(id, data)),
+  removeComment: id => dispatch(removeComment(id))
 })
-export default connect(mapStateToProps, { voteComment, removeComment })(Comment);
+export default connect(mapStateToProps, mapDispatchToProps)(Comment);
