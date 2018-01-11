@@ -78,12 +78,9 @@ const posts = (state={}, action) => {
         }
       }
     case REMOVE_POST:
+      delete state[id]
       return {
         ...state,
-        [id]: {
-          ...state[id],
-          deleted: true
-        }
       }
     case VOTE_POST:
       return {
@@ -122,12 +119,9 @@ const comments = (state={}, action) => {
         }
       }
     case REMOVE_COMMENT:
+      delete state[id]
       return {
         ...state,
-        [id]: {
-          ...state[id],
-          deleted: true
-        }
       }
     case VOTE_COMMENT:
       return {
