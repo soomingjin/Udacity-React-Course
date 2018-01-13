@@ -14,7 +14,7 @@ import Category from './Category'
 import Post from './Post'
 import AddEditPost from './AddEditPost'
 import AddEditComment from './AddEditComment'
-import { getCategories, getAllPosts, fetchPosts } from '../actions'
+import { getCategories, getAllPosts, togglePostModal } from '../actions'
 
 class App extends Component {
 
@@ -23,14 +23,12 @@ class App extends Component {
   }
 
   openPostModal = ({ edit }) => {
-    console.log("open");
     this.setState(() => ({
       postModalOpen: true,
     }))
   }
 
   closePostModal = () => {
-    console.log("close");
     this.setState(() => ({
       postModalOpen: false,
     }))
@@ -47,7 +45,7 @@ componentWillMount () {
 }
 
   render() {
-    const { categories } = this.props;
+    const { categories, modalMode } = this.props;
     const { postModalOpen, commentModalOpen } = this.state;
     const url = "http://localhost:3001/posts"
     return (
@@ -67,7 +65,7 @@ componentWillMount () {
           </Switch>
           <Modal
             className='modal'
-            isOpen={postModalOpen}
+              isOpen={postModalOpen}
             onRequestClose={this.closePostModal}
             contentLabel='Modal'
             ariaHideApp={false}
@@ -81,11 +79,12 @@ componentWillMount () {
   }
 }
 
-const mapStateToProps  = ({ categories }, ownProps) => {
+const mapStateToProps  = ({ categories, modalMode }, ownProps) => {
   return {
     categories: Object.keys(categories).map(category => categories[category].name),
+    modalMode: modalMode,
   }
 }
 
 
-export default connect(mapStateToProps, { getCategories, getAllPosts })(App);
+export default connect(mapStateToProps, { getCategories, getAllPosts, togglePostModal })(App);

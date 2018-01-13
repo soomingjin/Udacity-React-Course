@@ -22,6 +22,9 @@ class PartialPost extends Component {
     api.removePost(id).then((data) => this.props.removePost(data.id))
   }
 
+  handleEditPost = (id, e) => {
+    
+  }
 
   render(){
     const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
@@ -31,7 +34,7 @@ class PartialPost extends Component {
         <div><Link to={`${category}/${id}`}>{title}</Link> by {author}</div>
         <div>Current Score: <button className='upVote' onClick={this.handleUpVote.bind(this, id)}>Vote Up</button>{voteScore}<button className='downVote' onClick={this.handleDownVote.bind(this, id)}>Vote Down</button></div>
         <div>Comment Count: {commentCount}</div>
-        <div><button>Edit Post</button><button onClick={this.handleDeletePost.bind(this, id)}> Delete Post</button></div>
+        <div><button onClick={this.handleEditPost.bind(this, id)}>Edit Post</button><button onClick={this.handleDeletePost.bind(this, id)}> Delete Post</button></div>
         <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
             weekday: 'short',
             year: 'numeric',

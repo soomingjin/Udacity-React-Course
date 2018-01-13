@@ -10,6 +10,8 @@ export const ADD_COMMENT = "ADD_COMMENT"
 export const EDIT_COMMENT = "EDIT_COMMENT"
 export const VOTE_COMMENT = "VOTE_COMMENT"
 export const REMOVE_COMMENT = "REMOVE_COMMENT"
+export const TOGGLE_POST_MODAL = "TOGGLE_POST_MODAL"
+export const TOGGLE_COMMENT_MODAL = "TOGGLE_COMMENT_MODAL"
 
 export const getAllPosts = (posts)  => {
   return {
@@ -32,6 +34,23 @@ export const getCategories = (categories) => {
     categories,
   }
 }
+
+export const togglePostModal = (id, edit) => {
+  return {
+    type: TOGGLE_POST_MODAL,
+    id,
+    edit,
+  }
+}
+
+export const toggleCommentModal = (id, edit) => {
+  return {
+    type: TOGGLE_COMMENT_MODAL,
+    id,
+    edit,
+  }
+}
+
 
 export function addPost (post) {
   return {
@@ -92,22 +111,3 @@ export function voteComment (id, comment) {
     comment,
   }
 }
-
-export const fetchPosts = () => dispatch => (
-    api
-    .getPosts()
-    .then(posts =>
-      // console.log(posts)
-      dispatch(getAllPosts(posts))
-    )
-)
-
-export const fetchCommentsForPost = (id) => dispatch => (
-    api
-    .getCommentsForPost(id)
-    .then(comments => dispatch(getAllPosts(comments)))
-)
-
-export const fetchCategories = () => dispatch => (
-  api.getCategories().then(categories => dispatch(getCategories))
-)

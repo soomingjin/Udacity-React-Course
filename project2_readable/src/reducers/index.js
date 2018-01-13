@@ -12,6 +12,8 @@ import {
   EDIT_COMMENT,
   VOTE_COMMENT,
   REMOVE_COMMENT,
+  TOGGLE_POST_MODAL,
+  TOGGLE_COMMENT_MODAL,
 } from '../actions'
 
 const defaultState = {
@@ -41,6 +43,14 @@ const defaultState = {
 //   },
 //   'posts': {}
 // }
+
+const initialModalState = {
+  postModalOpen: false,
+  commentModalOpen: false,
+  editPost: false,
+  editComment: false,
+  id: "",
+}
 
 //API call => response => dispatch action w/ received data => action is called => reducer is called => store is updated => mapStateToProps updates view
 const posts = (state={}, action) => {
@@ -148,10 +158,33 @@ const categories = (state = {}, action) => {
       return state
   }
 }
-// export default postReducer
+
+const modalMode = (state=initialModalState, action ) => {
+  const { id, edit } = action;
+  switch(action.type){
+    case TOGGLE_POST_MODAL:
+      console.log(state);
+      return {
+        ...state,
+        postModalOpen: !state['postModalOpen'],
+        editPost: edit,
+        id: id,
+      }
+    case TOGGLE_COMMENT_MODAL:
+      return {
+        ...state,
+        commentModalOpen: !state['commentModalOpen'],
+        editComment: edit,
+        id: id,
+      }
+    default:
+      return state
+  }
+}
 
 export default combineReducers({
   categories,
   posts,
   comments,
+  modalMode,
 })

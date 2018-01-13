@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
 import { addPost, editPost } from '../actions'
@@ -10,6 +11,7 @@ class AddEditPost extends Component {
     author: "",
     category: "react",
     edit: false,
+    id: "",
   }
 
   handleCategoryChange = (e) => {
@@ -21,7 +23,6 @@ class AddEditPost extends Component {
     const payload = {
       ...this.state,
       timestamp: Date.now(),
-      id: "randoms"
     }
     api.addPost(payload).then(data => addPost(data))
   }
@@ -32,6 +33,12 @@ class AddEditPost extends Component {
     const name = target.name;
     this.setState({
       [name]: value
+    })
+  }
+
+  componentWillMount(){
+    this.setState({
+      id: uuid(),
     })
   }
   render(){

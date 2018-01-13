@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PartialPost from './PartialPost';
-import { fetchPosts } from '../actions';
 
 class FullPost extends Component {
   state = {
@@ -55,4 +54,4 @@ const mapStateToProps  = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPosts })(FullPost);
+export default connect(mapStateToProps)(FullPost);

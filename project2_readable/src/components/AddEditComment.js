@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
 import { addComment, editComment } from '../actions'
@@ -15,7 +16,6 @@ class AddEditComment extends Component {
     const payload = {
       ...this.state,
       timestamp: Date.now(),
-      id: "randoms",
       parentId: this.props.parentId
     }
     api.addComment(payload).then(data => addComment(data))
@@ -30,13 +30,20 @@ class AddEditComment extends Component {
       [name]: value
     })
   }
+
+  componentWillMount(){
+    this.setState({
+      id: uuid(),
+    })
+  }
+
   render(){
     return (
       <div>
-        <form method='post'>
+        <form>
           <input name='body' placeholder='body' type='text' onChange={this.handleInputChange}/>
           <input name='author' placeholder='author' type='text' onChange={this.handleInputChange}/>
-          <input type='submit'/>
+          <button onClick={this.handleSubmit}>Submit</button>
         </form>
       </div>
     )

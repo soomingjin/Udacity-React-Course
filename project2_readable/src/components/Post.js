@@ -41,7 +41,7 @@ class Post extends Component {
   }
 
   render(){
-    const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
+    const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data ? this.props.data : {}
     const {commentModalOpen } = this.state
     const postId = this.props.match ? this.props.match.params.post_id : "";
     return (
@@ -63,7 +63,7 @@ class Post extends Component {
         })}
         </div>
         <button onClick={this.openCommentModal}>Add Comment</button>
-        <Comments parentId={this.props.data.id} />
+        <Comments />
         <Modal
           className='modal'
           isOpen={commentModalOpen}
