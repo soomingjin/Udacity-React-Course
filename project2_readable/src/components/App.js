@@ -65,7 +65,7 @@ componentWillMount () {
           </Switch>
           <Modal
             className='modal'
-              isOpen={postModalOpen}
+            isOpen={postModalOpen}
             onRequestClose={this.closePostModal}
             contentLabel='Modal'
             ariaHideApp={false}

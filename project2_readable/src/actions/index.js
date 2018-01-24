@@ -12,6 +12,14 @@ export const VOTE_COMMENT = "VOTE_COMMENT"
 export const REMOVE_COMMENT = "REMOVE_COMMENT"
 export const TOGGLE_POST_MODAL = "TOGGLE_POST_MODAL"
 export const TOGGLE_COMMENT_MODAL = "TOGGLE_COMMENT_MODAL"
+export const CHANGE_SORT = "CHANGE_SORT"
+
+export const changeSort = (rule) => {
+  return {
+    type: CHANGE_SORT,
+    rule
+  }
+}
 
 export const getAllPosts = (posts)  => {
   return {

@@ -3,6 +3,7 @@ import * as api from '../utils/api'
 import { connect } from 'react-redux'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
+import { browserHistory } from 'react-router'
 import Comments from './Comments'
 import { getAllPosts, votePost, removePost } from '../actions';
 import AddEditComment from './AddEditComment'
@@ -38,6 +39,8 @@ class Post extends Component {
 
   handleDeletePost = (id, e) => {
     api.removePost(id).then((data) => this.props.removePost(data.id))
+    //Go back to home
+    this.props.history.push('/')
   }
 
   render(){

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PartialPost from './PartialPost';
+import { getSortedPosts } from '../selectors'
+import { changeSort } from '../actions'
 
 class FullPost extends Component {
   state = {
-    value: 'voteScore'
+    value: 'voteScore',
   }
 
   onSortChange = (e) => {
@@ -12,14 +14,9 @@ class FullPost extends Component {
     this.setState(() => ({
       value: sortMethod,
     }))
+    this.props.changeSort(sortMethod)
   }
-
   componentDidMount() {
-    // If there is enough time, implement a default sort method that can be configured
-    // if(this.props.sortMethod) {
-    //   document.getElementById('sort').selectedIndex = this.props.sortMethod;
-    // }
-    // this.props.fetchPosts()
 
   }
   render(){
@@ -39,19 +36,19 @@ class FullPost extends Component {
 
 const mapStateToProps  = (state, ownProps) => {
   const category = ownProps.category;
-  let posts = Object.keys(state['posts']);
   if(category) {
     return {
-      //Always use filter before mapping to choose the correct values
-      posts: Object.keys(state['posts']).filter((postId) => (state['posts'][postId].category === category)).map((postId) => (state['posts'][postId]))
+      // Always use filter before mapping to choose the correct values
+      posts: getSortedPosts(state).filter(post => post.category === category)
     }
   } else {
     return {
-      posts:  Object.keys(state.posts).map((postId) => {
-        return state['posts'][postId]
-      })
+      posts: getSortedPosts(state)
     }
   }
 }
 
-export default connect(mapStateToProps)(FullPost);
+const mapDispatchToProps = (dispatch) => ({
+  changeSort: sortMethod => dispatch(changeSort(sortMethod)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(FullPost);

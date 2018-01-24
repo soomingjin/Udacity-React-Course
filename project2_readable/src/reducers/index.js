@@ -14,6 +14,7 @@ import {
   REMOVE_COMMENT,
   TOGGLE_POST_MODAL,
   TOGGLE_COMMENT_MODAL,
+  CHANGE_SORT,
 } from '../actions'
 
 const defaultState = {
@@ -50,6 +51,10 @@ const initialModalState = {
   editPost: false,
   editComment: false,
   id: "",
+}
+
+const initialSortPostTypeState = {
+  rule: "voteScore"
 }
 
 //API call => response => dispatch action w/ received data => action is called => reducer is called => store is updated => mapStateToProps updates view
@@ -182,9 +187,21 @@ const modalMode = (state=initialModalState, action ) => {
   }
 }
 
+const sortPostType = (state=initialSortPostTypeState, action) => {
+  const { rule } = action
+  switch (action.type) {
+    case CHANGE_SORT:
+      return {
+        rule
+      }
+    default:
+      return state
+  }
+}
 export default combineReducers({
   categories,
   posts,
   comments,
   modalMode,
+  sortPostType,
 })
