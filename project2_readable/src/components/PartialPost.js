@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import { votePost, removePost } from '../actions'
 
 class PartialPost extends Component {
+  this.state = {
+      isEditing: false,
+  }
 
   componentWillMount () {
 
@@ -23,10 +26,15 @@ class PartialPost extends Component {
   }
 
   handleEditPost = (id, e) => {
-    
+    this.setState((prevState) => ({isEditing: !prevState.isEditing}))
   }
 
   render(){
+    if ( this.state.isEditing ) {
+      return {
+
+      }
+    }
     const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
     return (
       !deleted ?
@@ -44,6 +52,16 @@ class PartialPost extends Component {
             minute: '2-digit'
         })}
         </div>
+        <Modal
+          className='modal'
+          isOpen={isEditing}
+          onRequestClose={this.closePostModal}
+          contentLabel='Modal'
+          ariaHideApp={false}
+        >
+        {/* If is editing, then display Modal and pass in props of post details*/}
+          {isEditing && <AddEditPost />}
+        </Modal>
       </div>) :
       ""
     )

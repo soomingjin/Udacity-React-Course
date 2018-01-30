@@ -10,7 +10,6 @@ class AddEditPost extends Component {
     body: "",
     author: "",
     category: "react",
-    edit: false,
     id: "",
   }
 
@@ -42,6 +41,7 @@ class AddEditPost extends Component {
     })
   }
   render(){
+
     return (
       <div>
         <form>

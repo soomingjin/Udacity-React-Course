@@ -22,7 +22,7 @@ class App extends Component {
     postModalOpen: false,
   }
 
-  openPostModal = ({ edit }) => {
+  openPostModal = () => {
     this.setState(() => ({
       postModalOpen: true,
     }))
