@@ -3,6 +3,7 @@ import * as api from '../utils/api'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { votePost, removePost } from '../actions'
+import AddEditPost from './AddEditPost'
 
 class PartialPost extends Component {
   this.state = {
@@ -29,12 +30,12 @@ class PartialPost extends Component {
     this.setState((prevState) => ({isEditing: !prevState.isEditing}))
   }
 
+  closePostModal = () => {
+    this.setState(() => ({
+      postModalOpen: false,
+    }))
+  }
   render(){
-    if ( this.state.isEditing ) {
-      return {
-
-      }
-    }
     const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
     return (
       !deleted ?
@@ -60,7 +61,7 @@ class PartialPost extends Component {
           ariaHideApp={false}
         >
         {/* If is editing, then display Modal and pass in props of post details*/}
-          {isEditing && <AddEditPost />}
+          {isEditing && <AddEditPost data={this.props.data}/>}
         </Modal>
       </div>) :
       ""

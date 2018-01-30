@@ -36,10 +36,15 @@ class AddEditPost extends Component {
   }
 
   componentWillMount(){
+
     this.setState({
       id: uuid(),
     })
+    this.setState({
+
+    })
   }
+
   render(){
 
     return (
