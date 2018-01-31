@@ -18,12 +18,19 @@ class AddEditPost extends Component {
   }
 
   handleSubmit = () => {
-    delete this.state['edit']
-    const payload = {
-      ...this.state,
-      timestamp: Date.now(),
+    let payload = {};
+    if (this.props.currentPostIds.includes(this.state.id)){
+      payload = {
+        ...this.state,
+      }
+      api.editPost(payload.id, payload).then(data => editPost(data.id, data))
+    } else {
+      payload = {
+        ...this.state,
+        timestamp: Date.now(),
+      }
+      api.addPost(payload).then(data => addPost(data))
     }
-    api.addPost(payload).then(data => addPost(data))
   }
 
   handleInputChange = (e) => {
@@ -35,26 +42,36 @@ class AddEditPost extends Component {
     })
   }
 
-  componentWillMount(){
-
+  componentWillMount () {
     this.setState({
       id: uuid(),
     })
-    this.setState({
 
-    })
+    if (this.props.data) {
+      const { title, body, author, category, id } = this.props.data
+      this.setState({
+       title,
+       body,
+       author,
+       category,
+       id,
+      })
+    }
+  }
+
+  componentWillReceiveProps( nextProps ) {
   }
 
   render(){
-
+    const { title, body, author, category } = this.state;
     return (
       <div>
         <form>
           <label>Post</label>
-          <input name='title' placeholder='title' type='text' onChange={this.handleInputChange}/>
-          <input name='body' placeholder='body' type='text' onChange={this.handleInputChange}/>
-          <input name='author' placeholder='author' type='text' onChange={this.handleInputChange}/>
-          <select name='category' value={this.state.category} onChange={this.handleInputChange}>
+          <input name='title' placeholder='title' type='text' onChange={this.handleInputChange} value={title}/>
+          <input name='body' placeholder='body' type='text' onChange={this.handleInputChange} value={body}/>
+          <input name='author' placeholder='author' type='text' onChange={this.handleInputChange} value={author}/>
+          <select name='category' value={category} onChange={this.handleInputChange}>
             <option value='react'>React</option>
             <option value='redux'>Redux</option>
             <option value='udacity'>Udacity</option>
@@ -66,4 +83,8 @@ class AddEditPost extends Component {
   }
 }
 
-export default connect(null, { addPost, editPost })(AddEditPost);
+const mapStateToProps = (state) => ({
+  currentPostIds: Object.keys(state.posts),
+})
+
+export default connect(mapStateToProps, { addPost, editPost })(AddEditPost);

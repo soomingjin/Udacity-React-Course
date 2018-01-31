@@ -16,9 +16,7 @@ class FullPost extends Component {
     }))
     this.props.changeSort(sortMethod)
   }
-  componentDidMount() {
 
-  }
   render(){
     return (
       <div>

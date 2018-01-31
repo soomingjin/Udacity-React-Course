@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api'
+import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { votePost, removePost } from '../actions'
 import AddEditPost from './AddEditPost'
 
 class PartialPost extends Component {
-  this.state = {
+  state = {
       isEditing: false,
   }
 
@@ -32,11 +33,12 @@ class PartialPost extends Component {
 
   closePostModal = () => {
     this.setState(() => ({
-      postModalOpen: false,
+      isEditing: false,
     }))
   }
   render(){
     const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
+    const { isEditing } = this.state
     return (
       !deleted ?
       (<div className='container'>

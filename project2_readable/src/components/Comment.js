@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
+import Modal from 'react-modal'
 import { voteComment, removeComment } from '../actions'
+import AddEditComment from './AddEditComment'
 
 class Comment extends Component {
-
+  state = {
+    isEditing: false,
+  }
   handleUpVote = (id, e) => {
     api.voteComment(id, "upVote").then((data) => this.props.voteComment(data.id, data))
   }
@@ -17,8 +21,18 @@ class Comment extends Component {
     api.removeComment(id).then((data) => this.props.removeComment(data.id))
   }
 
+  handleEditPost = (id, e) => {
+    this.setState((prevState) => ({isEditing: !prevState.isEditing}))
+  }
+
+  closeCommentModal = () => {
+    this.setState(() => ({
+      isEditing: false,
+    }))
+  }
   render(){
     const { id, timestamp, body, author, voteScore, deleted } = this.props.data
+    const { isEditing } = this.state;
     return (
       <div className='container'>
         <div>{body}</div>
@@ -33,7 +47,16 @@ class Comment extends Component {
             minute: '2-digit'
         })}
         </div>
-        <div><button>Edit comment</button><button onClick={this.handleDeleteComment.bind(this, id)}>Delete comment</button></div>
+        <div><button onClick={this.handleEditPost.bind(this, id)}>Edit comment</button><button onClick={this.handleDeleteComment.bind(this, id)}>Delete comment</button></div>
+        <Modal
+          className='modal'
+          isOpen={isEditing}
+          onRequestClose={this.closeCommentModal}
+          contentLabel='Modal'
+          ariaHideApp={false}
+        >
+          {isEditing && <AddEditComment data={this.props.data} />}
+        </Modal>
       </div>
     )
   }

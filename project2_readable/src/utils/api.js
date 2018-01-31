@@ -43,9 +43,9 @@ export const editPost = (id, data) =>
   axios.put(`${URL}/posts/${id}`, data, { headers })
   .then(res => res.data)
 
-  export const editComment = (id, data) =>
-    axios.put(`${URL}/comments/${id}`, data, { headers })
-    .then(res => res.data)
+export const editComment = (id, data) =>
+  axios.put(`${URL}/comments/${id}`, data, { headers })
+  .then(res => res.data)
 
 //vote = "upVote" || "downVote"
 export const votePost = (id, vote) =>

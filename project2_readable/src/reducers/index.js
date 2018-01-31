@@ -57,6 +57,10 @@ const initialSortPostTypeState = {
   rule: "voteScore"
 }
 
+const initialSortCommentsTypeState = {
+  rule: "voteScore"
+}
+
 //API call => response => dispatch action w/ received data => action is called => reducer is called => store is updated => mapStateToProps updates view
 const posts = (state={}, action) => {
   const {id, posts, post} = action;
@@ -85,6 +89,7 @@ const posts = (state={}, action) => {
         }
       }
     case EDIT_POST:
+      console.log("edditing here");
       return {
         ...state,
         [id]: {
@@ -198,10 +203,24 @@ const sortPostType = (state=initialSortPostTypeState, action) => {
       return state
   }
 }
+
+const sortCommentsType = (state=initialSortCommentsTypeState, action) => {
+  const { rule } = action
+  switch (action.type) {
+    case CHANGE_SORT:
+      return {
+        rule
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   categories,
   posts,
   comments,
   modalMode,
   sortPostType,
+  sortCommentsType,
 })

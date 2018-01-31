@@ -7,10 +7,12 @@ import { browserHistory } from 'react-router'
 import Comments from './Comments'
 import { getAllPosts, votePost, removePost } from '../actions';
 import AddEditComment from './AddEditComment'
+import AddEditPost from './AddEditPost'
 
 class Post extends Component {
   state = {
     commentModalOpen: false,
+    isEditing: false,
   }
 
   componentWillMount () {
@@ -43,9 +45,18 @@ class Post extends Component {
     this.props.history.push('/')
   }
 
+  handleEditPost = (id, e) => {
+    this.setState((prevState) => ({isEditing: !prevState.isEditing}))
+  }
+
+  closePostModal = () => {
+    this.setState(() => ({
+      isEditing: false,
+    }))
+  }
   render(){
     const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data ? this.props.data : {}
-    const {commentModalOpen } = this.state
+    const {commentModalOpen, isEditing } = this.state
     const postId = this.props.match ? this.props.match.params.post_id : "";
     return (
       <div className='container'>
@@ -55,7 +66,7 @@ class Post extends Component {
         <div>{body}</div>
         <div>Current Score: <button onClick={this.handleUpVote.bind(this, id)}>Vote Up</button>{voteScore}<button onClick={this.handleDownVote.bind(this, id)}>Vote Down</button></div>
         <div>Comment Count: {commentCount}</div>
-        <div><button>Edit Post</button><button onClick={this.handleDeletePost.bind(this, id)}>Delete Post</button></div>
+        <div><button onClick={this.handleEditPost.bind(this, id)}>Edit Post</button><button onClick={this.handleDeletePost.bind(this, id)}>Delete Post</button></div>
         <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
             weekday: 'short',
             year: 'numeric',
@@ -75,6 +86,16 @@ class Post extends Component {
           ariaHideApp={false}
         >
           {commentModalOpen && <AddEditComment parentId={id} />}
+        </Modal>
+        <Modal
+          className='modal'
+          isOpen={isEditing}
+          onRequestClose={this.closePostModal}
+          contentLabel='Modal'
+          ariaHideApp={false}
+        >
+        {/* If is editing, then display Modal and pass in props of post details*/}
+          {isEditing && <AddEditPost data={this.props.data}/>}
         </Modal>
       </div>
     )
