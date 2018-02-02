@@ -29,16 +29,18 @@ class Comments extends Component {
   render(){
     const data = this.props.data ? this.props.data : {}
     return (
-      <div className='container'>
-        <h2>Comments</h2>
-          <div className='control-panel'>
+      <div className='row'>
+        <div className='col-12'>
+          <h2>Comments</h2>
+        </div>
+          <div className='control-panel col-12'>
             <label>Sort by: </label>
             <select value={this.state.value} id='sort' className='sort' onChange={this.onSortChange}>
               <option value="voteScore">Vote Score</option>
-              <option value="timestamp">Timestamp</option>
+              <option value="timestamp">Latest</option>
             </select>
           </div>
-        {data.map((data) => (<Comment key={data.id} id={data.id} />))}
+          {data.map((data) => (<Comment key={data.id} id={data.id} />))}
       </div>
     )
   }

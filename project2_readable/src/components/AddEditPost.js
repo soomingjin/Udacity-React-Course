@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import uuid from 'uuid';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
+import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { addPost, editPost } from '../actions'
 
 class AddEditPost extends Component {
@@ -66,18 +67,41 @@ class AddEditPost extends Component {
     const { title, body, author, category } = this.state;
     return (
       <div>
-        <form>
-          <label>Post</label>
-          <input name='title' placeholder='title' type='text' onChange={this.handleInputChange} value={title}/>
-          <input name='body' placeholder='body' type='text' onChange={this.handleInputChange} value={body}/>
-          <input name='author' placeholder='author' type='text' onChange={this.handleInputChange} value={author}/>
-          <select name='category' value={category} onChange={this.handleInputChange}>
-            <option value='react'>React</option>
-            <option value='redux'>Redux</option>
-            <option value='udacity'>Udacity</option>
-          </select>
-          <button onClick={this.handleSubmit}>Submit</button>
-        </form>
+        <Form>
+          <FormGroup row>
+            <Label for="title" sm={2}>Title</Label>
+            <Col sm={10}>
+              <Input name='title' placeholder='title' type='text' onChange={this.handleInputChange} value={title}/>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="author" sm={2}>Author</Label>
+            <Col sm={10}>
+              <Input name='author' placeholder='author' type='text' onChange={this.handleInputChange} value={author}/>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="body" sm={2}>Body</Label>
+            <Col sm={10}>
+              <Input name='body' placeholder='body' type='textarea' onChange={this.handleInputChange} value={body}/>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="category" sm={2}>Category</Label>
+            <Col sm={10}>
+              <Input name='category' type='select' onChange={this.handleInputChange} value={category}>
+                <option value='react'>React</option>
+                <option value='redux'>Redux</option>
+                <option value='udacity'>Udacity</option>
+              </Input>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Col sm={{ size: 10, offset: 2 }}>
+              <Button onClick={this.handleSubmit}>Submit</Button>
+            </Col>
+          </FormGroup>
+        </Form>
       </div>
     )
   }

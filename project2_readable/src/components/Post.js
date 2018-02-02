@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
-import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
 import { browserHistory } from 'react-router'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Comments from './Comments'
 import { getAllPosts, votePost, removePost } from '../actions';
 import AddEditComment from './AddEditComment'
@@ -25,12 +25,6 @@ class Post extends Component {
     }))
   }
 
-  closeCommentModal = () => {
-    this.setState(() => ({
-      commentModalOpen: false,
-    }))
-  }
-
   handleUpVote = (id, e) => {
     api.votePost(id, "upVote").then((data) => this.props.votePost(id, data))
   }
@@ -49,9 +43,16 @@ class Post extends Component {
     this.setState((prevState) => ({isEditing: !prevState.isEditing}))
   }
 
-  closePostModal = () => {
-    this.setState(() => ({
-      isEditing: false,
+
+  togglePostModal = () => {
+    this.setState((prevState) => ({
+      isEditing: !prevState.isEditing,
+    }))
+  }
+
+  toggleCommentModal = () => {
+    this.setState((prevState) => ({
+      commentModalOpen: !prevState.commentModalOpen,
     }))
   }
   render(){
@@ -59,43 +60,58 @@ class Post extends Component {
     const {commentModalOpen, isEditing } = this.state
     const postId = this.props.match ? this.props.match.params.post_id : "";
     return (
-      <div className='container'>
-        <h2>Post</h2>
-        <Link to="/" replace={false}>Back</Link>
-        <div>{title} by {author}</div>
-        <div>{body}</div>
-        <div>Current Score: <button onClick={this.handleUpVote.bind(this, id)}>Vote Up</button>{voteScore}<button onClick={this.handleDownVote.bind(this, id)}>Vote Down</button></div>
-        <div>Comment Count: {commentCount}</div>
-        <div><button onClick={this.handleEditPost.bind(this, id)}>Edit Post</button><button onClick={this.handleDeletePost.bind(this, id)}>Delete Post</button></div>
-        <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        })}
+      <div>
+        <div className='row'>
+          <div className='post-details col'>
+            <h2>Post Details</h2>
+            <Link to="/" replace={false}>Back</Link>
+            <div>{title} by {author}</div>
+            <div>{body}</div>
+            <div>Comment Count: {commentCount}</div>
+            <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}
+            </div>
+            <div className='row justify-content-between'>
+              <div className='col-4'>Current Score:
+                <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i class="fas fa-thumbs-up"></i></button>
+                {voteScore}
+                <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i class="fas fa-thumbs-down"></i></button>
+              </div>
+              <div className="btn-group col-2" role="group">
+                <button type="button" className="btn btn-light" onClick={this.handleEditPost.bind(this, id)}><span class="far fa-edit"></span></button>
+                <button type="button" className="btn btn-danger"  onClick={this.handleDeletePost.bind(this, id)}><i class="far fa-trash-alt"></i></button>
+              </div>
+            </div>
+            <button className='btn btn-outline-primary' onClick={this.openCommentModal}>Add Comment</button>
+          </div>
         </div>
-        <button onClick={this.openCommentModal}>Add Comment</button>
         <Comments />
         <Modal
-          className='modal'
           isOpen={commentModalOpen}
-          onRequestClose={this.closeCommentModal}
+          toggle={this.toggleCommentModal}
           contentLabel='Modal'
           ariaHideApp={false}
         >
-          {commentModalOpen && <AddEditComment parentId={id} />}
+         <ModalBody>
+            <AddEditComment parentId={id} />
+          </ModalBody>
         </Modal>
         <Modal
-          className='modal'
           isOpen={isEditing}
-          onRequestClose={this.closePostModal}
+          toggle={this.togglePostModal}
           contentLabel='Modal'
           ariaHideApp={false}
         >
         {/* If is editing, then display Modal and pass in props of post details*/}
-          {isEditing && <AddEditPost data={this.props.data}/>}
+          <ModalBody>
+            <AddEditPost data={this.props.data}/>
+          </ModalBody>
         </Modal>
       </div>
     )

@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api'
-import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { votePost, removePost } from '../actions'
 import AddEditPost from './AddEditPost'
 
 class PartialPost extends Component {
   state = {
       isEditing: false,
-  }
-
-  componentWillMount () {
-
   }
 
   handleUpVote = (id, e) => {
@@ -31,9 +27,9 @@ class PartialPost extends Component {
     this.setState((prevState) => ({isEditing: !prevState.isEditing}))
   }
 
-  closePostModal = () => {
-    this.setState(() => ({
-      isEditing: false,
+  togglePostModal = () => {
+    this.setState((prevState) => ({
+      isEditing: !prevState.isEditing,
     }))
   }
   render(){
@@ -41,29 +37,41 @@ class PartialPost extends Component {
     const { isEditing } = this.state
     return (
       !deleted ?
-      (<div className='container'>
-        <div><Link to={`${category}/${id}`}>{title}</Link> by {author}</div>
-        <div>Current Score: <button className='upVote' onClick={this.handleUpVote.bind(this, id)}>Vote Up</button>{voteScore}<button className='downVote' onClick={this.handleDownVote.bind(this, id)}>Vote Down</button></div>
-        <div>Comment Count: {commentCount}</div>
-        <div><button onClick={this.handleEditPost.bind(this, id)}>Edit Post</button><button onClick={this.handleDeletePost.bind(this, id)}> Delete Post</button></div>
-        <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        })}
+      (<div className='card partial-post'>
+        <div class="card-header">
+          <Link to={`${category}/${id}`}>{title}</Link> by {author}
+        </div>
+        <div className='card-body'>
+          <div>Comment Count: {commentCount}</div>
+          <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+          })}
+          </div>
+          <div className='row justify-content-between'>
+            <div className='col-4'>Current Score:
+              <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i class="fas fa-thumbs-up"></i></button>
+              {voteScore}
+              <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i class="fas fa-thumbs-down"></i></button>
+            </div>
+            <div className="btn-group col-2" role="group">
+              <button type="button" className="btn btn-light" onClick={this.handleEditPost.bind(this, id)}><span class="far fa-edit"></span></button>
+              <button type="button" className="btn btn-danger"  onClick={this.handleDeletePost.bind(this, id)}><i class="far fa-trash-alt"></i></button>
+            </div>
+          </div>
         </div>
         <Modal
-          className='modal'
           isOpen={isEditing}
-          onRequestClose={this.closePostModal}
-          contentLabel='Modal'
-          ariaHideApp={false}
+          toggle={this.togglePostModal}
         >
         {/* If is editing, then display Modal and pass in props of post details*/}
-          {isEditing && <AddEditPost data={this.props.data}/>}
+          <ModalBody>
+            <AddEditPost data={this.props.data}/>
+          </ModalBody>
         </Modal>
       </div>) :
       ""

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import PartialPost from './PartialPost';
 import { getSortedPosts } from '../selectors'
 import { changeSort } from '../actions'
@@ -20,13 +21,22 @@ class FullPost extends Component {
   render(){
     return (
       <div>
-        <div className='control-panel'>
-          <label>Sort by: </label><select value={this.state.value} id='sort' className='sort' onChange={this.onSortChange}>
-            <option value="voteScore">Vote Score</option>
-            <option value="timestamp">Timestamp</option>
-          </select>
+        <div className='row'>
+          <div className='col-4 float-right'>
+            <label for='sort' className=''><span>Sort by: </span></label>
+            <select classaName='' value={this.state.value} name='sort' className='sort' type='select' onChange={this.onSortChange}>
+              <option value="voteScore">Vote Score</option>
+              <option value="timestamp">Latest</option>
+            </select>
+          </div>
         </div>
-        {this.props.posts.map((post) => (<PartialPost key={post.id} data={post}/>))}
+        <div className='row'>
+          <div className='col'>
+            {this.props.posts.map((post) => (
+              <PartialPost data={post}/>
+            ))}
+          </div>
+        </div>
       </div>
     )
   }

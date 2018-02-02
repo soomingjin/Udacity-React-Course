@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
-import Modal from 'react-modal'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { voteComment, removeComment } from '../actions'
 import AddEditComment from './AddEditComment'
 
@@ -21,41 +21,53 @@ class Comment extends Component {
     api.removeComment(id).then((data) => this.props.removeComment(data.id))
   }
 
-  handleEditPost = (id, e) => {
+  handleEditComment = (id, e) => {
     this.setState((prevState) => ({isEditing: !prevState.isEditing}))
   }
 
-  closeCommentModal = () => {
-    this.setState(() => ({
-      isEditing: false,
+  toggleCommentModal = () => {
+    this.setState((prevState) => ({
+      isEditing: !prevState.isEditing,
     }))
   }
   render(){
     const { id, timestamp, body, author, voteScore, deleted } = this.props.data
     const { isEditing } = this.state;
     return (
-      <div className='container'>
-        <div>{body}</div>
-        <div>Current Score: <button onClick={this.handleUpVote.bind(this, id)}>Vote Up</button>{voteScore}<button onClick={this.handleDownVote.bind(this, id)}>Vote Down</button></div>
-        <div>{author}</div>
-        <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        })}
+      <div className='comment card col-12'>
+        <div className='card-body'>
+          <div>{body}</div>
+          <div>Author: {author}</div>
+          <div>Time posted: {new Date(timestamp).toLocaleString('en-us', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+          })}
+          </div>
+          <div className='row justify-content-between'>
+            <div className='col-4'>Current Score:
+              <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i class="fas fa-thumbs-up"></i></button>
+              {voteScore}
+              <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i class="fas fa-thumbs-down"></i></button>
+            </div>
+            <div className="btn-group col-2" role="group">
+              <button type="button" className="btn btn-light" onClick={this.handleEditComment.bind(this, id)}><span class="far fa-edit"></span></button>
+              <button type="button" className="btn btn-danger"  onClick={this.handleDeleteComment.bind(this, id)}><i class="far fa-trash-alt"></i></button>
+            </div>
+          </div>
         </div>
-        <div><button onClick={this.handleEditPost.bind(this, id)}>Edit comment</button><button onClick={this.handleDeleteComment.bind(this, id)}>Delete comment</button></div>
         <Modal
-          className='modal'
           isOpen={isEditing}
-          onRequestClose={this.closeCommentModal}
+          toggle={this.toggleCommentModal}
           contentLabel='Modal'
           ariaHideApp={false}
         >
-          {isEditing && <AddEditComment data={this.props.data} />}
+          <ModalBody>
+            {isEditing && <AddEditComment data={this.props.data} />}
+          </ModalBody>
         </Modal>
       </div>
     )

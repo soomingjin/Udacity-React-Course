@@ -13,7 +13,7 @@ class Category extends Component {
     const props = this.props;
     const category = this.props.match ? this.props.match.params.category : ""
     return (
-      <div className='container'>
+      <div>
         {category !== "" ? (<h2>{category}</h2>) : ""}
         <Link to="/" replace={false}>Back</Link>
         <FullPost category={category}/>

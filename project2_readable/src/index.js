@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
 import reducer from './reducers'
 import App from './components/App'
 
@@ -33,11 +34,11 @@ const store = createStore(
 // );
 
 ReactDOM.render(
-    <Provider store={store}>
-      <Router>
-        <App/>
-      </Router>
-    </Provider>,
+  <Provider store={store}>
+    <Router>
+      <App/>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 registerServiceWorker();

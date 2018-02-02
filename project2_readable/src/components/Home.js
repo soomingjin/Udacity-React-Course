@@ -14,9 +14,6 @@ class Home extends Component {
       <div>
         <h2>Home</h2>
         <FullPost/>
-        {/*categories.map((category) => {
-          return (<Category key={category} category={category}/>)
-        })*/}
       </div>
     )
   }
