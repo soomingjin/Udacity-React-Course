@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { browserHistory } from 'react-router'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import Comments from './Comments'
 import { getAllPosts, votePost, removePost } from '../actions';
 import AddEditComment from './AddEditComment'
@@ -56,9 +55,8 @@ class Post extends Component {
     }))
   }
   render(){
-    const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data ? this.props.data : {}
+    const { id, timestamp, title, body, author, voteScore, commentCount } = this.props.data ? this.props.data : {}
     const {commentModalOpen, isEditing } = this.state
-    const postId = this.props.match ? this.props.match.params.post_id : "";
     return (
       <div>
         <div className='row'>

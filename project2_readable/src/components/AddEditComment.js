@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import uuid from 'uuid';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { addComment, editComment } from '../actions'
 
 class AddEditComment extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import { votePost, removePost } from '../actions'
 import AddEditPost from './AddEditPost'
 
@@ -33,7 +33,7 @@ class PartialPost extends Component {
     }))
   }
   render(){
-    const { id, timestamp, title, body, author, category, voteScore, deleted, commentCount } = this.props.data
+    const { id, timestamp, title, author, category, voteScore, deleted, commentCount } = this.props.data
     const { isEditing } = this.state
     return (
       !deleted ?

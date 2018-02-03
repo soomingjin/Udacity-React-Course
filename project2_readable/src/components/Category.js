@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import Post from './Post';
 import FullPost from './FullPost';
 
 class Category extends Component {
@@ -10,7 +9,6 @@ class Category extends Component {
 
   }
   render(){
-    const props = this.props;
     const category = this.props.match ? this.props.match.params.category : ""
     return (
       <div>

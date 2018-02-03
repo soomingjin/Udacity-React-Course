@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import { voteComment, removeComment } from '../actions'
 import AddEditComment from './AddEditComment'
 
@@ -31,7 +31,7 @@ class Comment extends Component {
     }))
   }
   render(){
-    const { id, timestamp, body, author, voteScore, deleted } = this.props.data
+    const { id, timestamp, body, author, voteScore } = this.props.data
     const { isEditing } = this.state;
     return (
       <div className='comment card col-12'>

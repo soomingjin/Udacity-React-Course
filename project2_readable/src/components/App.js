@@ -9,13 +9,11 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux'
 // import Modal from 'react-modal'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import {Modal, ModalBody } from 'reactstrap';
 import Home from './Home'
 import Category from './Category'
 import Post from './Post'
 import AddEditPost from './AddEditPost'
-import AddEditComment from './AddEditComment'
 import { getCategories, getAllPosts, togglePostModal } from '../actions'
 
 class App extends Component {
@@ -46,27 +44,26 @@ componentWillMount () {
 }
 
   render() {
-    const { categories, modalMode } = this.props;
-    const { postModalOpen, commentModalOpen } = this.state;
-    const url = "http://localhost:3001/posts"
+    const { categories } = this.props;
+    const { postModalOpen } = this.state;
     return (
       <Router>
         <div>
-          <nav class="navbar-expand-lg navbar-dark bg-dark navbar navbar-default">
-            <a class="navbar-brand" href="#">Readable</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+          <nav className="navbar-expand-lg navbar-dark bg-dark navbar navbar-default">
+            <Link className="navbar-brand" to='/'>Readable</Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <Link class="nav-link" to='/'>Home <span class="sr-only">(current)</span></Link>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to='/'>Home <span className="sr-only">(current)</span></Link>
                 </li>
 
                 {categories.map((category) => {
                   return (
                   <li key={category}>
-                    <Link class="nav-link" to={`/${category}`}>{category}</Link>
+                    <Link className="nav-link" to={`/${category}`}>{category}</Link>
                   </li>
                 )
                 })}
