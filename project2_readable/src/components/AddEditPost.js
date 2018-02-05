@@ -24,13 +24,13 @@ class AddEditPost extends Component {
       payload = {
         ...this.state,
       }
-      api.editPost(payload.id, payload).then(data => editPost(data.id, data))
+      api.editPost(payload.id, payload).then(data => this.props.editPost(data.id, data))
     } else {
       payload = {
         ...this.state,
         timestamp: Date.now(),
       }
-      api.addPost(payload).then(data => addPost(data))
+      api.addPost(payload).then(data => this.props.addPost(data))
     }
   }
 

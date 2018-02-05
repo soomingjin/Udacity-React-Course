@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
 import { Modal, ModalBody } from 'reactstrap';
-import { voteComment, removeComment } from '../actions'
+import { voteComment, removeComment, updatePost, getAllPosts } from '../actions'
 import AddEditComment from './AddEditComment'
 
 class Comment extends Component {
@@ -49,13 +49,13 @@ class Comment extends Component {
           </div>
           <div className='row justify-content-between'>
             <div className='col-4'>Current Score:
-              <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i class="fas fa-thumbs-up"></i></button>
+              <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i className="fas fa-thumbs-up"></i></button>
               {voteScore}
-              <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i class="fas fa-thumbs-down"></i></button>
+              <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i className="fas fa-thumbs-down"></i></button>
             </div>
             <div className="btn-group col-2" role="group">
-              <button type="button" className="btn btn-light" onClick={this.handleEditComment.bind(this, id)}><span class="far fa-edit"></span></button>
-              <button type="button" className="btn btn-danger"  onClick={this.handleDeleteComment.bind(this, id)}><i class="far fa-trash-alt"></i></button>
+              <button type="button" className="btn btn-light" onClick={this.handleEditComment.bind(this, id)}><span className="far fa-edit"></span></button>
+              <button type="button" className="btn btn-danger"  onClick={this.handleDeleteComment.bind(this, id)}><i className="far fa-trash-alt"></i></button>
             </div>
           </div>
         </div>
@@ -82,6 +82,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   voteComment: (id, data) => dispatch(voteComment(id, data)),
-  removeComment: id => dispatch(removeComment(id))
+  removeComment: id => dispatch(removeComment(id)),
+  getAllPosts: (data) => dispatch(getAllPosts(data)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);

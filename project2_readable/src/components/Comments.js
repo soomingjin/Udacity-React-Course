@@ -31,7 +31,7 @@ class Comments extends Component {
     return (
       <div className='row'>
         <div className='col-12'>
-          <h2>Comments</h2>
+          <h3>Comments ({data.length})</h3>
         </div>
           <div className='control-panel col-12'>
             <label>Sort by: </label>

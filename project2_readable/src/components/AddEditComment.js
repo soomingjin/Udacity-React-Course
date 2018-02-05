@@ -3,7 +3,7 @@ import uuid from 'uuid';
 import * as api from '../utils/api'
 import { connect } from 'react-redux'
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { addComment, editComment } from '../actions'
+import { addComment, editComment, getAllPosts} from '../actions'
 
 class AddEditComment extends Component {
   state = {
@@ -18,15 +18,16 @@ class AddEditComment extends Component {
       payload = {
         ...this.state,
       }
-      api.editComment(payload.id, payload).then(data => editComment(data.id, data))
+      api.editComment(payload.id, payload).then(  data => this.props.editComment(data.id, data))
     } else {
       payload = {
         ...this.state,
         timestamp: Date.now(),
         parentId: this.props.parentId
       }
-      api.addComment(payload).then(data => addComment(data))
+      api.addComment(payload).then(data => this.props.addComment(data))
     }
+    api.getPosts().then(data => this.props.getAllPosts(data))
   }
 
   handleInputChange = (e) => {
@@ -84,4 +85,10 @@ const mapStateToProps = (state) => ({
   currentCommentIds: Object.keys(state.comments),
 })
 
-export default connect(mapStateToProps, { addComment, editComment })(AddEditComment);
+const mapDispatchToProps = (dispatch) => ({
+  addComment: data => dispatch(addComment(data)),
+  editComment: (id, data) => dispatch(editComment(id, data)),
+  getAllPosts: (data) => dispatch(getAllPosts(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditComment);

@@ -65,7 +65,6 @@ export const toggleCommentModal = (id, edit) => {
   }
 }
 
-
 export function addPost (post) {
   return {
     type: ADD_POST,
@@ -96,7 +95,7 @@ export function votePost (id, post) {
   }
 }
 
-export function addComment (comment) {
+export const addComment = (comment) => {
   return {
     type: ADD_COMMENT,
     comment,

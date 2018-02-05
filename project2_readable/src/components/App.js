@@ -42,7 +42,6 @@ componentWillMount () {
   api.getPosts().then(data => this.props.getAllPosts(data))
 
 }
-
   render() {
     const { categories } = this.props;
     const { postModalOpen } = this.state;

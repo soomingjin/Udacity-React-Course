@@ -89,7 +89,6 @@ const posts = (state={}, action) => {
         }
       }
     case EDIT_POST:
-      console.log("edditing here");
       return {
         ...state,
         [id]: {
@@ -106,7 +105,7 @@ const posts = (state={}, action) => {
       return {
         ...state,
         [id] : {
-          ...post
+          ...post,
         }
       }
     default:
