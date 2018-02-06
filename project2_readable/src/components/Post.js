@@ -57,9 +57,8 @@ class Post extends Component {
   render(){
     const { id, timestamp, title, body, author, voteScore, commentCount, deleted } = this.props.data ? this.props.data : {}
     const {commentModalOpen, isEditing } = this.state
-
     return (
-      !deleted ? (<div>
+      this.props.data ? (<div>
         <div className='row'>
           <div className='post-details col'>
             <h2>Post Details</h2>
