@@ -59,7 +59,7 @@ class Post extends Component {
     const {commentModalOpen, isEditing } = this.state
 
     return (
-      this.props.data ? (<div>
+      !deleted ? (<div>
         <div className='row'>
           <div className='post-details col'>
             <h2>Post Details</h2>
