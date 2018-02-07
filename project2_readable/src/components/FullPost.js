@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import PartialPost from './PartialPost';
 import { getSortedPosts } from '../selectors'
 import { changeSort } from '../actions'
@@ -18,6 +19,11 @@ class FullPost extends Component {
   }
 
   render(){
+    if (this.props.hasError) {
+      return (
+        <Redirect from='*' to='/404' />
+      )
+    }
     return (
       <div>
         <div className='row'>
@@ -43,15 +49,18 @@ class FullPost extends Component {
 
 const mapStateToProps  = (state, ownProps) => {
   const category = ownProps.category;
-  if(category) {
+  if(Object.keys(state.categories).includes(category)) {
     return {
       // Always use filter before mapping to choose the correct values
       posts: getSortedPosts(state).filter(post => post.category === category)
     }
-  } else {
+  } else if(category){
     return {
-      posts: getSortedPosts(state)
+      hasError: true
     }
+  }
+  return {
+    posts: getSortedPosts(state)
   }
 }
 

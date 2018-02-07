@@ -14,6 +14,7 @@ import Home from './Home'
 import Category from './Category'
 import Post from './Post'
 import AddEditPost from './AddEditPost'
+import NotFound from './NotFound'
 import { getCategories, getAllPosts, togglePostModal } from '../actions'
 
 class App extends Component {
@@ -85,6 +86,7 @@ componentWillMount () {
             </div>
           <Switch>
             <Route exact path="/" component={Home}/>
+            <Route exact path='/404' component={NotFound} />
             <Route exact path="/:category" component={Category}/>
             <Route exact path="/:category/:post_id" component={Post}/>
           </Switch>

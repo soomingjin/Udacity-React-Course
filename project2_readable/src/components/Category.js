@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import FullPost from './FullPost';
 
 class Category extends Component {
@@ -10,6 +10,9 @@ class Category extends Component {
   }
   render(){
     const category = this.props.match ? this.props.match.params.category : ""
+    if (!category){
+      return (<Redirect from='*' to='/404' />)
+    }
     return (
       <div>
         {category !== "" ? (<h2>{category}</h2>) : ""}

@@ -75,7 +75,7 @@ class Post extends Component {
       return (<p>Loading…</p>)
     }
     if (!this.props.data) {
-      return (<Redirect to='/' />)
+      return (<Redirect from='*' to='/404' />)
     }
     return (
       <div>
