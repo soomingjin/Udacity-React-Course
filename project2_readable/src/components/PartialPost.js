@@ -38,7 +38,7 @@ class PartialPost extends Component {
     return (
       !deleted ?
       (<div className='card partial-post'>
-        <div class="card-header">
+        <div className="card-header">
           <Link to={`${category}/${id}`}>{title}</Link> by {author}
         </div>
         <div className='card-body'>
@@ -54,13 +54,13 @@ class PartialPost extends Component {
           </div>
           <div className='row justify-content-between'>
             <div className='col-4'>Current Score:
-              <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i class="fas fa-thumbs-up"></i></button>
+              <button type="button" className="btn btn-light" onClick={this.handleUpVote.bind(this, id)}><i className="fas fa-thumbs-up"></i></button>
               {voteScore}
-              <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i class="fas fa-thumbs-down"></i></button>
+              <button type="button" className="btn btn-light" onClick={this.handleDownVote.bind(this, id)}><i className="fas fa-thumbs-down"></i></button>
             </div>
             <div className="btn-group col-2" role="group">
-              <button type="button" className="btn btn-light" onClick={this.handleEditPost.bind(this, id)}><span class="far fa-edit"></span></button>
-              <button type="button" className="btn btn-danger"  onClick={this.handleDeletePost.bind(this, id)}><i class="far fa-trash-alt"></i></button>
+              <button type="button" className="btn btn-light" onClick={this.handleEditPost.bind(this, id)}><span className="far fa-edit"></span></button>
+              <button type="button" className="btn btn-danger"  onClick={this.handleDeletePost.bind(this, id)}><i className="far fa-trash-alt"></i></button>
             </div>
           </div>
         </div>

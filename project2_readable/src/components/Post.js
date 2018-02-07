@@ -12,10 +12,24 @@ class Post extends Component {
   state = {
     commentModalOpen: false,
     isEditing: false,
+    isload: false,
+    hasErrored: false,
+
   }
 
   componentWillMount () {
-    api.getPosts().then(data => this.props.getAllPosts(data))
+    this.fetchData()
+  }
+
+  fetchData = () => {
+    this.setState({isLoading: true})
+    api.getPosts()
+      .then(data => {
+        this.props.getAllPosts(data)
+        this.setState({isLoading: false})
+      })
+      // .catch(() => this.setState({ hasErrored: true }))
+
   }
 
   openCommentModal = () => {
@@ -57,8 +71,14 @@ class Post extends Component {
   render(){
     const { id, timestamp, title, body, author, voteScore, commentCount, deleted } = this.props.data ? this.props.data : {}
     const {commentModalOpen, isEditing } = this.state
+    if (this.state.isLoading) {
+      return (<p>Loading…</p>)
+    }
+    if (!this.props.data) {
+      return (<Redirect to='/' />)
+    }
     return (
-      this.props.data ? (<div>
+      <div>
         <div className='row'>
           <div className='post-details col'>
             <h2>Post Details</h2>
@@ -107,9 +127,7 @@ class Post extends Component {
           </ModalBody>
         </Modal>
       </div>
-    ) : (
-      <Redirect to='/' />
-    )
+
     )
   }
 }

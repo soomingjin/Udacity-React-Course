@@ -32,7 +32,7 @@ class FullPost extends Component {
         <div className='row'>
           <div className='col'>
             {this.props.posts.map((post) => (
-              <PartialPost data={post}/>
+              <PartialPost key={post.id} data={post}/>
             ))}
           </div>
         </div>
