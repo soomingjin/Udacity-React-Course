@@ -1,18 +1,17 @@
-export const GET_ALL_POSTS = 'GET_ALL_POSTS'
-export const GET_CATEGORIES = 'GET_CATEGORIES'
-export const GET_COMMENTS_FOR_POST = 'GET_COMMENTS_FOR_POST'
-export const ADD_POST = "ADD_POST"
-export const EDIT_POST = "EDIT_POST"
-export const VOTE_POST = "VOTE_POST"
-export const REMOVE_POST = "REMOVE_POST"
-export const ADD_COMMENT = "ADD_COMMENT"
-export const EDIT_COMMENT = "EDIT_COMMENT"
-export const VOTE_COMMENT = "VOTE_COMMENT"
-export const REMOVE_COMMENT = "REMOVE_COMMENT"
-export const TOGGLE_POST_MODAL = "TOGGLE_POST_MODAL"
-export const TOGGLE_COMMENT_MODAL = "TOGGLE_COMMENT_MODAL"
-export const CHANGE_SORT = "CHANGE_SORT"
-export const CHANGE_COMMENT_SORT = "CHANGE_SORT"
+import {
+  GET_ALL_POSTS,
+  GET_CATEGORIES,
+  GET_COMMENTS_FOR_POST,
+  ADD_POST,
+  EDIT_POST,
+  VOTE_POST,
+  REMOVE_POST,
+  ADD_COMMENT,
+  EDIT_COMMENT,
+  VOTE_COMMENT,
+  REMOVE_COMMENT,
+  CHANGE_SORT,
+} from './types'
 
 export const changeSort = (rule) => {
   return {
@@ -49,30 +48,14 @@ export const getCategories = (categories) => {
   }
 }
 
-export const togglePostModal = (id, edit) => {
-  return {
-    type: TOGGLE_POST_MODAL,
-    id,
-    edit,
-  }
-}
-
-export const toggleCommentModal = (id, edit) => {
-  return {
-    type: TOGGLE_COMMENT_MODAL,
-    id,
-    edit,
-  }
-}
-
-export function addPost (post) {
+export const addPost = (post) => {
   return {
     type: ADD_POST,
     post,
   }
 }
 
-export function editPost (id, post) {
+export const editPost = (id, post) => {
   return {
     type: EDIT_POST,
     id,
@@ -80,14 +63,14 @@ export function editPost (id, post) {
   }
 }
 
-export function removePost (id) {
+export const removePost = (id) => {
   return {
     type: REMOVE_POST,
     id,
   }
 }
 
-export function votePost (id, post) {
+export const votePost = (id, post) => {
   return {
     type: VOTE_POST,
     id,
@@ -102,7 +85,7 @@ export const addComment = (comment) => {
   }
 }
 
-export function editComment (id, comment) {
+export const editComment = (id, comment) => {
   return {
     type: EDIT_COMMENT,
     id,
@@ -110,14 +93,14 @@ export function editComment (id, comment) {
   }
 }
 
-export function removeComment (id) {
+export const removeComment = (id) => {
   return {
     type: REMOVE_COMMENT,
     id
   }
 }
 
-export function voteComment (id, comment) {
+export const voteComment = (id, comment) => {
   return {
     type: VOTE_COMMENT,
     id,
