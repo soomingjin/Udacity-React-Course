@@ -18,7 +18,7 @@ class FullPost extends Component {
 
   render() {
     return (
-      this.props.hasError
+      !this.props.hasError
       ? (<div>
         <div className='row'>
           <div className='col-4 float-right'>
