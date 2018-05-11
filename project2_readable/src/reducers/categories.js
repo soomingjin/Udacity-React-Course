@@ -4,7 +4,6 @@ import {
 
 export const categories = (state = {}, action) => {
   const { categories } = action;
-  console.log(categories);
   switch(action.type){
     case GET_CATEGORIES:
       return {
