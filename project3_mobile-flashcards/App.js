@@ -1,12 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, Platform, StatusBar ,KeyboardAvoidingView } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+import CreateDeck from './components/CreateDeck'
+import DeckList from './components/DeckList'
+import CardCreate from './components/CardCreate'
+import DeckTitle from './components/DeckTitle'
+import QuizDeck from './components/QuizDeck'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import { setLocalNotification } from './utils/helpers'
+import { purple, white } from './utils/colors'
 
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
@@ -18,30 +24,34 @@ function UdaciStatusBar ({backgroundColor, ...props}) {
 }
 
 const Tabs = TabNavigator({
-  History: {
-    screen: History,
+  Decks: {
+    screen: DeckList,
     navigationOptions: {
-      tabBarLabel: 'History',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-    },
+      tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name='cards-outline' size={30} color={tintColor} />
+    }
   },
-  AddEntry: {
-    screen: AddEntry,
+  DeckCreate: {
+    screen: CreateDeck,
     navigationOptions: {
-      tabBarLabel: 'Add Entry',
-      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
-    },
-  },
-}, {
+      tabBarLabel: 'New Deck',
+      tabBarIcon: ({tintColor}) => <Ionicons name='ios-create-outline' size={30} color={tintColor} />
+    }
+  }
+},{
   navigationOptions: {
-    header: null
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: '#4e4cb8'
+    },
+    title: 'Mobile Flashcards',
+    headerLeft: null
   },
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? purple : white,
+    activeTintColor: Platform.OS === 'ios' ? purple: white,
     style: {
       height: 56,
-      backgroundColor: Platform.OS === 'ios' ? white : purple,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      backgroundColor: Platform.OS === 'ios' ? white: purple,
+      shadowColor: 'rgba(0,0,0,0.24)',
       shadowOffset: {
         width: 0,
         height: 3
@@ -55,13 +65,34 @@ const Tabs = TabNavigator({
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
+    navigationOptions: {
+      headerBackTitle: 'Home'
+    }
   },
-  EntryDetail: {
-    screen: EntryDetail,
+  DeckDetail: {
+    screen: DeckTitle,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: purple
+      }
+    }
+  },
+  AddCard: {
+    screen: CardCreate,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
+  },
+  DeckQuiz: {
+    screen: QuizDeck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
       }
     }
   }
@@ -74,10 +105,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
+        <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
           <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
           <MainNavigator />
-        </View>
+        </KeyboardAvoidingView>
       </Provider>
     );
   }
@@ -87,7 +118,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
