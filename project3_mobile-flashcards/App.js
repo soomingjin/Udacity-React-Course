@@ -6,10 +6,10 @@ import reducer from './reducers'
 import CreateDeck from './components/CreateDeck'
 import DeckList from './components/DeckList'
 import CardCreate from './components/CardCreate'
-import DeckTitle from './components/DeckTitle'
+import DeckDetail from './components/DeckDetail'
 import QuizDeck from './components/QuizDeck'
-import { TabNavigator, StackNavigator } from 'react-navigation'
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import { setLocalNotification } from './utils/helpers'
 import { purple, white } from './utils/colors'
@@ -22,29 +22,30 @@ function UdaciStatusBar ({backgroundColor, ...props}) {
     </View>
   )
 }
-
-const Tabs = TabNavigator({
+const tabRouteConfigs = {
   Decks: {
     screen: DeckList,
     navigationOptions: {
       tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name='cards-outline' size={30} color={tintColor} />
     }
   },
-  DeckCreate: {
+  CreateDeck: {
     screen: CreateDeck,
     navigationOptions: {
       tabBarLabel: 'New Deck',
       tabBarIcon: ({tintColor}) => <Ionicons name='ios-create-outline' size={30} color={tintColor} />
     }
   }
-},{
+}
+
+const tabNavgatorConfig = {
   navigationOptions: {
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#4e4cb8'
     },
     title: 'Mobile Flashcards',
-    headerLeft: null
+    header: null
   },
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? purple: white,
@@ -60,9 +61,16 @@ const Tabs = TabNavigator({
       shadowOpacity: 1
     }
   }
-})
+}
 
-const MainNavigator = StackNavigator({
+const Tabs = {}
+if (Platform.OS === 'ios'){
+  Tabs = createBottomTabNavigator(tabRouteConfigs, tabNavgatorConfig)
+} else {
+  Tabs = createMaterialTopTabNavigator(tabRouteConfigs, tabNavgatorConfig)
+}
+
+const MainNavigator = createStackNavigator({
   Home: {
     screen: Tabs,
     navigationOptions: {
@@ -70,7 +78,7 @@ const MainNavigator = StackNavigator({
     }
   },
   DeckDetail: {
-    screen: DeckTitle,
+    screen: DeckDetail,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
@@ -87,7 +95,7 @@ const MainNavigator = StackNavigator({
       }
     }
   },
-  DeckQuiz: {
+  QuizDeck: {
     screen: QuizDeck,
     navigationOptions: {
       headerTintColor: white,
