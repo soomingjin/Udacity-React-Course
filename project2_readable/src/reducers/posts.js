@@ -16,14 +16,6 @@ export const posts = (state={}, action) => {
           previous[current.id] = current
           return previous
         }, {})
-        // ...posts.map((post) => {
-        //
-        //   return {
-        //     [post.id]: {
-        //       ...post
-        //     }
-        //   }
-        // })
       }
     case ADD_POST:
       return {

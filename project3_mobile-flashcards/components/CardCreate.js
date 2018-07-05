@@ -10,6 +10,7 @@ import {
 import {connect} from 'react-redux'
 import {addCardToDeck} from '../utils/helpers'
 import {addCard} from '../actions'
+import { darkRed, darkGray } from '../utils/colors'
 
 class CardCreate extends Component {
   constructor(props) {
@@ -39,14 +40,15 @@ class CardCreate extends Component {
   }
 
   submit = () => {
+    { question, answer, deck } = this.state
     Keyboard.dismiss()
-    if (this.state.question.text.trim() !== '' && this.state.answer.text.trim() !== '') {
+    if (question.text.trim() !== '' && answer.text.trim() !== '') {
       const payload = {
-        question: this.state.question.text,
-        answer: this.state.answer.text
+        question: question.text,
+        answer: answer.text
       }
-      addCardToDeck(this.state.deck, payload)
-        .then(this.props.dispatch(addCard(this.state.deck, payload)))
+      addCardToDeck(deck, payload)
+        .then(this.props.dispatch(addCard(deck, payload)))
         .then(this.setState({
           question: {
             text: '',
@@ -63,32 +65,32 @@ class CardCreate extends Component {
             }
           }
         }))
-        .then(this.props.navigation.navigate('DeckDetail', {deck: this.state.deck}))
+        .then(this.props.navigation.navigate('DeckDetail', {deck: deck}))
     } else {
-      let question = {
-        text: this.state.question.text,
+      let currQuestion = {
+        text: question.text,
         error: {
           status: false,
         }
       }
 
-      let answer = {
-        text: this.state.answer.text,
+      let currAnswer = {
+        text: answer.text,
         error: {
           status: false,
         }
       }
-      if (this.state.question.text.trim() === '') {
-        question.error.status = true
-        question.error.text = 'Question must be filled'
+      if (question.text.trim() === '') {
+        currQuestion.error.status = true
+        currQuestion.error.text = 'Question must be filled'
       }
 
-      if (this.state.answer.text.trim() === '') {
-        answer.error.status = true
-        answer.error.text = 'Answer must be filled'
+      if (answer.text.trim() === '') {
+        currAnswer.error.status = true
+        currAnswer.error.text = 'Answer must be filled'
       }
 
-      this.setState({question, answer})
+      this.setState({currQuestion, currAnswer})
     }
   }
   handleQuestionTextChange = (text) => {
@@ -113,9 +115,10 @@ class CardCreate extends Component {
     })
   }
   render() {
+    { question, answer, deck } = this.state
     return (<View style={styles.container}>
-      <TextInput onChangeText={(text) => this.handleQuestionTextChange(text)} value={this.state.question.text} placeholder="Question" style={styles.input}/> {this.state.question.error.status && (<Text style={styles.errorText}>{this.state.question.error.text}</Text>)}
-      <TextInput onChangeText={(text) => this.handleAnswerTextChange(text)} value={this.state.answer.text} placeholder="Answer" style={styles.input}/> {this.state.answer.error.status && (<Text style={styles.errorText}>{this.state.answer.error.text}</Text>)}
+      <TextInput onChangeText={(text) => this.handleQuestionTextChange(text)} value={question.text} placeholder="Question" style={styles.input}/> {question.error.status && (<Text style={styles.errorText}>{question.error.text}</Text>)}
+      <TextInput onChangeText={(text) => this.handleAnswerTextChange(text)} value={answer.text} placeholder="Answer" style={styles.input}/> {answer.error.status && (<Text style={styles.errorText}>{answer.error.text}</Text>)}
       <TouchableOpacity onPress={this.submit} style={styles.submitBtn}>
         <Text style={styles.submitBtnText}>Submit</Text>
       </TouchableOpacity>
@@ -131,24 +134,24 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: darkGray,
     borderRadius: 5,
     padding: 10,
     alignSelf: 'stretch',
     margin: 15
   },
   submitBtn: {
-    backgroundColor: '#333',
+    backgroundColor: darkGray,
     borderRadius: 5,
     padding: 10,
     paddingLeft: 40,
     paddingRight: 40
   },
   submitBtnText: {
-    color: '#fff'
+    color: 'white'
   },
   errorText: {
-    color: '#aa0000',
+    color: darkRed,
     marginBottom: 15
   }
 })

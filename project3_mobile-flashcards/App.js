@@ -12,7 +12,7 @@ import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNav
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import { setLocalNotification } from './utils/helpers'
-import { purple, white } from './utils/colors'
+import { purple, white, lightPurple } from './utils/colors'
 
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
@@ -42,7 +42,7 @@ const tabNavgatorConfig = {
   navigationOptions: {
     headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#4e4cb8'
+      backgroundColor: lightPurple
     },
     title: 'Mobile Flashcards',
     header: null
@@ -106,7 +106,7 @@ const MainNavigator = createStackNavigator({
   }
 })
 
-export default class App extends React.Component {
+export default class App extends Component {
   componentDidMount(){
     setLocalNotification()
   }

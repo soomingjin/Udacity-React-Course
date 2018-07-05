@@ -35,7 +35,8 @@ class App extends Component {
   render() {
     const {categories} = this.props;
     const {postModalOpen} = this.state;
-    return (<Router>
+    return (
+    <Router>
       <div>
         <nav className="navbar-expand-lg navbar-dark bg-dark navbar navbar-default">
           <Link className="navbar-brand" to='/'>Readable</Link>
